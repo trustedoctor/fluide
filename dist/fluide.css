@@ -1,0 +1,589 @@
+* {
+  box-sizing: border-box;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+@media (min-width: 640px) {
+  .medium-text-left {
+    text-align: left !important;
+  }
+  .medium-text-right {
+    text-align: right !important;
+  }
+  .medium-text-center {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .large-text-left {
+    text-align: left !important;
+  }
+  .large-text-right {
+    text-align: right !important;
+  }
+  .large-text-center {
+    text-align: center !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xlarge-text-left {
+    text-align: left !important;
+  }
+  .xlarge-text-right {
+    text-align: right !important;
+  }
+  .xlarge-text-center {
+    text-align: center !important;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.container.fluid {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.container.full {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.row.row-margin {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.row.row-margin > .cell {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.cell {
+  flex: 0 0 auto;
+  min-height: 0px;
+  min-width: 0px;
+}
+
+.row > .cell {
+  flex-basis: auto;
+}
+
+.small-1 {
+  width: 8.333333%;
+}
+
+.small-offset-1 {
+  margin-left: 8.333333%;
+}
+
+.small-2 {
+  width: 16.666667%;
+}
+
+.small-offset-2 {
+  margin-left: 16.666667%;
+}
+
+.small-3 {
+  width: 25%;
+}
+
+.small-offset-3 {
+  margin-left: 25%;
+}
+
+.small-4 {
+  width: 33.333333%;
+}
+
+.small-offset-4 {
+  margin-left: 33.333333%;
+}
+
+.small-5 {
+  width: 41.666667%;
+}
+
+.small-offset-5 {
+  margin-left: 41.666667%;
+}
+
+.small-6 {
+  width: 50%;
+}
+
+.small-offset-6 {
+  margin-left: 50%;
+}
+
+.small-7 {
+  width: 58.333333%;
+}
+
+.small-offset-7 {
+  margin-left: 58.333333%;
+}
+
+.small-8 {
+  width: 66.666667%;
+}
+
+.small-offset-8 {
+  margin-left: 66.666667%;
+}
+
+.small-9 {
+  width: 75%;
+}
+
+.small-offset-9 {
+  margin-left: 75%;
+}
+
+.small-10 {
+  width: 83.333333%;
+}
+
+.small-offset-10 {
+  margin-left: 83.333333%;
+}
+
+.small-11 {
+  width: 91.666667%;
+}
+
+.small-offset-11 {
+  margin-left: 91.666667%;
+}
+
+.small-12 {
+  width: 100%;
+}
+
+.small-offset-12 {
+  margin-left: 100%;
+}
+
+@media (min-width: 640px) {
+  .medium-1 {
+    width: 8.333333%;
+  }
+  .medium-offset-1 {
+    margin-left: 8.333333%;
+  }
+  .medium-2 {
+    width: 16.666667%;
+  }
+  .medium-offset-2 {
+    margin-left: 16.666667%;
+  }
+  .medium-3 {
+    width: 25%;
+  }
+  .medium-offset-3 {
+    margin-left: 25%;
+  }
+  .medium-4 {
+    width: 33.333333%;
+  }
+  .medium-offset-4 {
+    margin-left: 33.333333%;
+  }
+  .medium-5 {
+    width: 41.666667%;
+  }
+  .medium-offset-5 {
+    margin-left: 41.666667%;
+  }
+  .medium-6 {
+    width: 50%;
+  }
+  .medium-offset-6 {
+    margin-left: 50%;
+  }
+  .medium-7 {
+    width: 58.333333%;
+  }
+  .medium-offset-7 {
+    margin-left: 58.333333%;
+  }
+  .medium-8 {
+    width: 66.666667%;
+  }
+  .medium-offset-8 {
+    margin-left: 66.666667%;
+  }
+  .medium-9 {
+    width: 75%;
+  }
+  .medium-offset-9 {
+    margin-left: 75%;
+  }
+  .medium-10 {
+    width: 83.333333%;
+  }
+  .medium-offset-10 {
+    margin-left: 83.333333%;
+  }
+  .medium-11 {
+    width: 91.666667%;
+  }
+  .medium-offset-11 {
+    margin-left: 91.666667%;
+  }
+  .medium-12 {
+    width: 100%;
+  }
+  .medium-offset-12 {
+    margin-left: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .large-1 {
+    width: 8.333333%;
+  }
+  .large-offset-1 {
+    margin-left: 8.333333%;
+  }
+  .large-2 {
+    width: 16.666667%;
+  }
+  .large-offset-2 {
+    margin-left: 16.666667%;
+  }
+  .large-3 {
+    width: 25%;
+  }
+  .large-offset-3 {
+    margin-left: 25%;
+  }
+  .large-4 {
+    width: 33.333333%;
+  }
+  .large-offset-4 {
+    margin-left: 33.333333%;
+  }
+  .large-5 {
+    width: 41.666667%;
+  }
+  .large-offset-5 {
+    margin-left: 41.666667%;
+  }
+  .large-6 {
+    width: 50%;
+  }
+  .large-offset-6 {
+    margin-left: 50%;
+  }
+  .large-7 {
+    width: 58.333333%;
+  }
+  .large-offset-7 {
+    margin-left: 58.333333%;
+  }
+  .large-8 {
+    width: 66.666667%;
+  }
+  .large-offset-8 {
+    margin-left: 66.666667%;
+  }
+  .large-9 {
+    width: 75%;
+  }
+  .large-offset-9 {
+    margin-left: 75%;
+  }
+  .large-10 {
+    width: 83.333333%;
+  }
+  .large-offset-10 {
+    margin-left: 83.333333%;
+  }
+  .large-11 {
+    width: 91.666667%;
+  }
+  .large-offset-11 {
+    margin-left: 91.666667%;
+  }
+  .large-12 {
+    width: 100%;
+  }
+  .large-offset-12 {
+    margin-left: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xlarge-1 {
+    width: 8.333333%;
+  }
+  .xlarge-offset-1 {
+    margin-left: 8.333333%;
+  }
+  .xlarge-2 {
+    width: 16.666667%;
+  }
+  .xlarge-offset-2 {
+    margin-left: 16.666667%;
+  }
+  .xlarge-3 {
+    width: 25%;
+  }
+  .xlarge-offset-3 {
+    margin-left: 25%;
+  }
+  .xlarge-4 {
+    width: 33.333333%;
+  }
+  .xlarge-offset-4 {
+    margin-left: 33.333333%;
+  }
+  .xlarge-5 {
+    width: 41.666667%;
+  }
+  .xlarge-offset-5 {
+    margin-left: 41.666667%;
+  }
+  .xlarge-6 {
+    width: 50%;
+  }
+  .xlarge-offset-6 {
+    margin-left: 50%;
+  }
+  .xlarge-7 {
+    width: 58.333333%;
+  }
+  .xlarge-offset-7 {
+    margin-left: 58.333333%;
+  }
+  .xlarge-8 {
+    width: 66.666667%;
+  }
+  .xlarge-offset-8 {
+    margin-left: 66.666667%;
+  }
+  .xlarge-9 {
+    width: 75%;
+  }
+  .xlarge-offset-9 {
+    margin-left: 75%;
+  }
+  .xlarge-10 {
+    width: 83.333333%;
+  }
+  .xlarge-offset-10 {
+    margin-left: 83.333333%;
+  }
+  .xlarge-11 {
+    width: 91.666667%;
+  }
+  .xlarge-offset-11 {
+    margin-left: 91.666667%;
+  }
+  .xlarge-12 {
+    width: 100%;
+  }
+  .xlarge-offset-12 {
+    margin-left: 100%;
+  }
+}
+
+.small-order-1 {
+  order: 1;
+}
+
+.small-order-2 {
+  order: 2;
+}
+
+.small-order-3 {
+  order: 3;
+}
+
+.small-order-4 {
+  order: 4;
+}
+
+.small-order-5 {
+  order: 5;
+}
+
+.small-order-6 {
+  order: 6;
+}
+
+.small-order-7 {
+  order: 7;
+}
+
+.small-order-8 {
+  order: 8;
+}
+
+.small-order-9 {
+  order: 9;
+}
+
+.small-order-10 {
+  order: 10;
+}
+
+.small-order-11 {
+  order: 11;
+}
+
+.small-order-12 {
+  order: 12;
+}
+
+@media (min-width: 640px) {
+  .medium-order-1 {
+    order: 1;
+  }
+  .medium-order-2 {
+    order: 2;
+  }
+  .medium-order-3 {
+    order: 3;
+  }
+  .medium-order-4 {
+    order: 4;
+  }
+  .medium-order-5 {
+    order: 5;
+  }
+  .medium-order-6 {
+    order: 6;
+  }
+  .medium-order-7 {
+    order: 7;
+  }
+  .medium-order-8 {
+    order: 8;
+  }
+  .medium-order-9 {
+    order: 9;
+  }
+  .medium-order-10 {
+    order: 10;
+  }
+  .medium-order-11 {
+    order: 11;
+  }
+  .medium-order-12 {
+    order: 12;
+  }
+}
+
+@media (min-width: 1024px) {
+  .large-order-1 {
+    order: 1;
+  }
+  .large-order-2 {
+    order: 2;
+  }
+  .large-order-3 {
+    order: 3;
+  }
+  .large-order-4 {
+    order: 4;
+  }
+  .large-order-5 {
+    order: 5;
+  }
+  .large-order-6 {
+    order: 6;
+  }
+  .large-order-7 {
+    order: 7;
+  }
+  .large-order-8 {
+    order: 8;
+  }
+  .large-order-9 {
+    order: 9;
+  }
+  .large-order-10 {
+    order: 10;
+  }
+  .large-order-11 {
+    order: 11;
+  }
+  .large-order-12 {
+    order: 12;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xlarge-order-1 {
+    order: 1;
+  }
+  .xlarge-order-2 {
+    order: 2;
+  }
+  .xlarge-order-3 {
+    order: 3;
+  }
+  .xlarge-order-4 {
+    order: 4;
+  }
+  .xlarge-order-5 {
+    order: 5;
+  }
+  .xlarge-order-6 {
+    order: 6;
+  }
+  .xlarge-order-7 {
+    order: 7;
+  }
+  .xlarge-order-8 {
+    order: 8;
+  }
+  .xlarge-order-9 {
+    order: 9;
+  }
+  .xlarge-order-10 {
+    order: 10;
+  }
+  .xlarge-order-11 {
+    order: 11;
+  }
+  .xlarge-order-12 {
+    order: 12;
+  }
+}
+
+/*# sourceMappingURL=fluide.css.map */

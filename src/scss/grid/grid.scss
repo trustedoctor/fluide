@@ -1,0 +1,18 @@
+@import "classes.scss";
+@import "order.scss";
+
+@mixin grid-base() {
+  .container {
+    @include grid-container();
+
+    &.fluid {
+      @include grid-container(100%);
+    }
+
+    &.full {
+      @include grid-container(100%, 0);
+    }
+  }
+
+  @include grid-classes();
+}

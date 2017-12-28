@@ -1,0 +1,29 @@
+@mixin text-aligments() {
+  .text-left {
+    text-align: left !important;
+  }
+
+  .text-right {
+    text-align: right !important;
+  }
+
+  .text-center {
+    text-align: center !important;
+  }
+
+  @each $breakpoint in $grid-breakpoints-classes {
+    @include breakpoint($breakpoint) {
+      .#{$breakpoint}-text-left {
+        text-align: left !important;
+      }
+
+      .#{$breakpoint}-text-right {
+        text-align: right !important;
+      }
+
+      .#{$breakpoint}-text-center {
+        text-align: center !important;
+      }
+    }
+  }
+}
