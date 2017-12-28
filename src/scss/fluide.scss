@@ -3,9 +3,11 @@
 @import "globals.scss";
 @import "responsive.scss";
 
+@import "utils/typography.scss";
 @import "utils/float.scss";
 @import "grid/grid.scss";
 
+@include typography();
 @include text-aligments();
 @include grid-base();
 @include grid-order();

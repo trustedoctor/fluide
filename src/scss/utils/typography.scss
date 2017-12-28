@@ -1,0 +1,39 @@
+@mixin typography() {
+  html {
+    font-size: $base-font-size;
+  }
+
+  body {
+    font-family: $base-font-family;
+    line-height: 1.45;
+  }
+
+  p {
+    margin-bottom: 1.3em;
+  }
+
+  h1, h2, h3, h4 {
+    margin: 1.414em 0 0.5em;
+    font-weight: inherit;
+    line-height: 1.2em;
+  }
+
+  h1 {
+    margin-top: 0;
+  }
+
+  @each $breakpoint, $values in $heading-font-sizes {
+    @include breakpoint($breakpoint) {
+      @each $h, $size in $values {
+        
+        @if index(h1 h2 h3 h4 h5 h6, $h) != null {
+          #{$h} {
+            font-size: $size;
+          }
+        } @else {
+          @warn "Unfortunately, `#{$h}` is not supported heading."
+        }
+      }
+    }
+  }
+}
