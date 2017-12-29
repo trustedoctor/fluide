@@ -1,0 +1,11 @@
+@import "true";
+
+@import "../src/scss/fluide.scss";
+
+@include describe('rem [function]') {
+  @include it('Rem convert px to rem based on root font size') {
+
+    // Assert the expected results
+    @include assert-equal(rem(16px), 1);
+  }
+}
