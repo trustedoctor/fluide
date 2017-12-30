@@ -4,3 +4,9 @@
 **Simple, fluid CSS and JS framework**
 
 ### WIP
+
+## Test it
+If you want test `fluide` add this to your package.json:
+```json
+"fluide": "git+https://git@github.com/nerdslabs/fluide.git"
+```
