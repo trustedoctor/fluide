@@ -1,6 +1,6 @@
 @import "true";
 
-@import "../src/scss/fluide.scss";
+@import "../scss/fluide.scss";
 
 @include describe('rem [function]') {
   @include it('Rem convert px to rem based on root font size') {
