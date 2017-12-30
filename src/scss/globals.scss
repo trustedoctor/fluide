@@ -1,6 +1,6 @@
-$global-width: 1200px;
-$base-font-size: 16px;
-$base-font-family: "Helvetica, sans-serif";
+$global-width: 1200px !default;
+$base-font-size: 16px !default;
+$base-font-family: "Helvetica, sans-serif" !default;
 
 $grid-columns: 12 !default;
 $grid-column-gutter: 10px !default;
@@ -8,7 +8,7 @@ $grid-column-gutter: 10px !default;
 $grid-breakpoints: ( small: 0, medium: 640px, large: 1024px, xlarge: 1200px, xxlarge: 1440px, ) !default;
 $grid-breakpoints-classes: ( medium, large, xlarge, ) !default;
 
-$grid-column-width: calc(#{(100% / $grid-columns)} - #{(2 * $grid-column-gutter)});
+$grid-column-width: calc(#{(100% / $grid-columns)} - #{(2 * $grid-column-gutter)}) !default;
 
 $grid-order-points: 12 !default;
 
@@ -29,4 +29,4 @@ $heading-font-sizes: (
     h5: 14px,
     h6: 12px,
   )
-)
+) !default

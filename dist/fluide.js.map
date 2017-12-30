@@ -1,0 +1,1 @@
+{"version":3,"file":"fluide.js","sources":["../src/js/main.js"],"sourcesContent":["export default {\n  version: '__VERSION__',\n}"],"names":[],"mappings":";;;;;;;;;;;AAAA,WAAe;WACJ;CADX;;;;;;;;"}

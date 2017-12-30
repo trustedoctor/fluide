@@ -1,1 +1,3 @@
-let test = () => console.log("Fluide __VERSION__")
+export default {
+  version: '__VERSION__',
+}

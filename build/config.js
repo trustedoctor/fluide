@@ -1,6 +1,7 @@
 import path from 'path'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 const version = process.env.VERSION || require('../package.json').version
 
@@ -20,55 +21,61 @@ const builds = {
     input: resolve('src/js/main.js'),
     format: 'cjs',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.common.js'),
-      format: 'cjs'
+      format: 'cjs',
+      banner: banner
     },
-    banner
   },
   'web-cjs-min': {
     input: resolve('src/js/main.js'),
     format: 'cjs',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.common.min.js'),
-      format: 'cjs'
+      format: 'cjs',
+      banner: banner
     },
-    banner
   },
   'web-esm': {
     input: resolve('src/js/main.js'),
     format: 'es',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.esm.js'),
-      format: 'es'
+      format: 'es',
+      banner: banner
     },
-    banner
   },
   'web-esm-min': {
     input: resolve('src/js/main.js'),
     format: 'es',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.esm.min.js'),
-      format: 'es'
+      format: 'es',
+      banner: banner
     },
-    banner
   },
   'web': {
     input: resolve('src/js/main.js'),
     format: 'umd',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.js'),
-      format: 'umd'
+      format: 'umd',
+      banner: banner
     },
-    banner
   },
   'web-min': {
     input: resolve('src/js/main.js'),
     format: 'umd',
     output: {
+      sourcemap: true,
       file: resolve('dist/fluide.min.js'),
-      format: 'umd'
+      format: 'umd',
+      banner: banner
     },
-    banner
   },
 }
 
@@ -80,13 +87,16 @@ function genConfig(opts, environment) {
     external: opts.external,
     format: opts.format,
     output: opts.output,
-    banner: opts.banner,
     name: opts.name || 'fluide',
     plugins: [
       replace({
         __VERSION__: version
       }),
+      // typescript({
+      //   typescript: require('typescript')
+      // }),
       babel(),
+      sourcemaps()
       // alias(Object.assign({}, aliases, opts.alias))
     ].concat(opts.plugins || [])
   }
@@ -99,7 +109,7 @@ function genConfig(opts, environment) {
     if(env === 'development') {
       config['watch'] = {
         chokidar: true,
-        include: ['src/js/**', 'src/scss/**']
+        include: ['src/js/**']
       }
     }
   }
