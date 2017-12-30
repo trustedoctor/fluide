@@ -2,15 +2,15 @@
 	"version": 3,
 	"file": "fluide.css",
 	"sources": [
-		"../src/scss/fluide.scss",
-		"../src/scss/utils/reset.scss",
-		"../src/scss/globals.scss",
-		"../src/scss/responsive.scss",
-		"../src/scss/utils/typography.scss",
-		"../src/scss/utils/float.scss",
-		"../src/scss/grid/grid.scss",
-		"../src/scss/grid/classes.scss",
-		"../src/scss/grid/order.scss"
+		"../scss/fluide.scss",
+		"../scss/utils/reset.scss",
+		"../scss/globals.scss",
+		"../scss/responsive.scss",
+		"../scss/utils/typography.scss",
+		"../scss/utils/float.scss",
+		"../scss/grid/grid.scss",
+		"../scss/grid/classes.scss",
+		"../scss/grid/order.scss"
 	],
 	"sourcesContent": [
 		"@import \"utils/reset.scss\";\n\n@import \"globals.scss\";\n@import \"responsive.scss\";\n\n@import \"utils/typography.scss\";\n@import \"utils/float.scss\";\n@import \"grid/grid.scss\";\n\n@include typography();\n@include text-aligments();\n@include grid-base();\n@include grid-order();",

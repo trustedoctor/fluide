@@ -5,11 +5,11 @@
   "scripts": {
     "js:compile": "rollup -c build/config.js --environment TARGET:web",
     "js:watch": "rollup -w -c build/config.js --environment TARGET:web",
-    "js:watch2": "nodemon --watch src/js --exec \"yarn run js:compile\"",
+    "js:watch2": "nodemon --watch js --exec \"yarn run js:compile\"",
     "js:dist": "echo \"TODO\"",
     "js:minify": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content=dist/fluide.js.map,includeSources,url=fluide.min.js.map\" --output dist/fluide.min.js dist/fluide.js",
-    "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 src/scss/fluide.scss dist/fluide.css",
-    "css:watch": "node-sass -w --output-style expanded --source-map true --source-map-contents true --precision 6 src/scss/fluide.scss dist/fluide.css",
+    "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/fluide.scss dist/fluide.css",
+    "css:watch": "node-sass -w --output-style expanded --source-map true --source-map-contents true --precision 6 scss/fluide.scss dist/fluide.css",
     "css:dist": "npm-run-all --parallel css:compile --sequential css:autoprefixer css:minify",
     "css:autoprefixer": "postcss dist/fluide.css --use autoprefixer -d dist",
     "css:minify": "cleancss --level 1 --source-map --source-map-inline-sources --output dist/fluide.min.css dist/fluide.css",
@@ -20,7 +20,7 @@
   },
   "main": "dist/fluide.js",
   "style": "dist/fluide.css",
-  "sass": "src/scss/fluide.scss",
+  "sass": "scss/fluide.scss",
   "author": "Krystian Drożdżyński",
   "license": "Apache-2.0",
   "devDependencies": {
