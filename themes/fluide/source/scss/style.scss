@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&subset=latin-ext');
+@import url('https://file.myfontastic.com/QAGQqgNmKxCaYrC8P3BsjA/icons.css');
+
+$base-font-family: "Lato" !default;
+@import '../../../../node_modules/fluide/scss/fluide.scss';
+
+$black: #222222;
+$primary: #41338C;
+$accent: #AD2383;
+
+body {
+  background: $primary;
+  color: #fff;
+}
+
+a {
+  color: #fff;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  padding: 24px 0;
+
+  nav {
+
+    a {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 15px;
+      text-decoration: none;
+
+      img {
+        display: block;
+      }
+      
+      &:nth-child(1n+2) {
+        margin-left: 15px;
+      }
+
+      &.stars {
+        margin-left: 35px;
+      }
+    }
+  }
+}
+
+section {
+
+  h1, h2, h3 {
+    font-weight: 300;
+  }
+
+  .button {
+    background: $black;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.50), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 2px;
+    display: inline-block;
+
+    font-weight: bold;
+    font-size: .8125rem;
+    padding: 10px 32px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    text-decoration: none;
+
+    &.primary {
+      background: $accent;
+    }
+  }
+
+  .button + .button {
+    margin-left: 20px;
+  }
+
+  &.home {
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    
+    &.top {
+      min-height: 90vh;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -70px;
+        top: -160px;
+        height: calc(100% + 200px);
+        width: calc(100% + 140px);
+        transform: rotate(-2.5deg);
+        background: $black;
+        z-index: 1;
+      }
+
+      .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      .logo {
+        height: 35vh;
+        text-align: center;
+
+        img {
+          height: 100%;
+        }
+      }
+
+      .info {
+        text-align: center;
+
+        h1 {
+          font-size: 2.875rem;
+          margin-bottom: 6px;
+        }
+
+        h2 {
+          font-size: 1rem;
+          margin-top: 6px;
+        }
+
+        ul.features {
+          margin-top: 25px;
+
+          li {
+            display: inline-block;
+
+            i {
+              margin-right: 12px;
+              display: inline-block;
+              vertical-align: middle;
+              font-size: 22px;
+              line-height: 22px;
+            }
+
+            span {
+              display: inline-block;
+              vertical-align: middle;
+              font-family: Monaco;
+              font-size: .875rem;
+            }
+
+            &:nth-child(1n+2) {
+              margin-left: 35px;
+            }
+          }
+        }
+      }
+    }
+
+    &.why {
+
+      h3 {
+        margin-bottom: 25px;
+      }
+
+      .buttons {
+        margin-top: 80px;
+      }
+    }
+
+    &.crafted {
+      text-align: center;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: -70px;
+        top: 0;
+        height: calc(100%);
+        width: calc(100% + 140px);
+        transform: rotate(2.5deg);
+        background: $accent;
+        z-index: 1;
+      }
+
+      .container {
+        position: relative;
+        z-index: 2;
+      }
+
+      h3 {
+        margin-top: 0;
+      }
+
+      .items {
+        margin-top: 75px;
+
+        i {
+          font-size: 51px;
+          line-height: 51px;
+          display: block;
+          margin-bottom: 16px;
+        }
+
+        span {
+          font-weight: 300;
+          font-size: 1.375rem;
+        }
+      }
+    }
+  }
+}
+
+footer {
+  padding: 60px 0 15px;
+}

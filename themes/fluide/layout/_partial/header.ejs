@@ -1,0 +1,17 @@
+<header>
+   <!-- url_for() -->
+  <div class="container">
+    <div class="row">
+      <div class="small-12 large-6 cell"></div>
+      <div class="small-12 large-6 cell text-right">
+        <nav>
+          <a class="nav-icon"></a>
+          <% for (var i in theme.menu){ %>
+            <a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
+          <% } %>
+          <a href="https://github.com/nerdslabs/fluide" class="stars" target="_blank"><img src="https://img.shields.io/github/stars/nerdslabs/fluide.svg?style=social&label=Stars"></a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
