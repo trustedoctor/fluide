@@ -1,5 +1,5 @@
-<div style="text-align:center">
-  <img src="https://nerdslabs.github.io/fluide/images/logo.svg" style="width: 200px;margin-bottom:15px" />
+<div align="center">
+  <img src="https://nerdslabs.github.io/fluide/images/logo.svg" width="200px" />
 
   [![Travis](https://img.shields.io/travis/nerdslabs/fluide.svg)](https://travis-ci.org/nerdslabs/fluide) [![Docs](https://img.shields.io/badge/fluide-docs-41338C.svg)](https://nerdslabs.github.io/fluide/)
 
