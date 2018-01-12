@@ -1,7 +1,11 @@
-[![Travis](https://img.shields.io/travis/nerdslabs/fluide.svg)](https://travis-ci.org/nerdslabs/fluide)
+<div style="text-align:center">
+  <img src="https://nerdslabs.github.io/fluide/images/logo.svg" style="width: 200px;margin-bottom:15px" />
 
-# fluide
-**Simple, fluid CSS and JS framework**
+  [![Travis](https://img.shields.io/travis/nerdslabs/fluide.svg)](https://travis-ci.org/nerdslabs/fluide) [![Docs](https://img.shields.io/badge/fluide-docs-41338C.svg)](https://nerdslabs.github.io/fluide/)
+
+  # fluide
+  **Simple, fluid CSS and JS framework**
+</div>
 
 ### WIP
 
