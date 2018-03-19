@@ -22,3 +22,10 @@ body {
 .row {
   margin-bottom: 60px;
 }
+
+.scrollbar {
+  display: inline-block;
+  max-height: 150px;
+  overflow: auto;
+  padding: 0 10px;
+}

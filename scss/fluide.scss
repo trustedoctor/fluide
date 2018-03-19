@@ -7,7 +7,10 @@
 @import "utils/float.scss";
 @import "grid/grid.scss";
 
+@import "scrollbar/default.scss";
+
 @include typography();
 @include text-aligments();
 @include grid-base();
 @include grid-order();
+@include scrollbar-default();
