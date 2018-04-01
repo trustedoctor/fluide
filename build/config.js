@@ -2,6 +2,7 @@ import path from 'path'
 import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import sourcemaps from 'rollup-plugin-sourcemaps';
+import typescript from 'rollup-plugin-typescript';
 
 const version = process.env.VERSION || require('../package.json').version
 
@@ -18,7 +19,7 @@ const banner =
 
 const builds = {
   'web-cjs': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'cjs',
     output: {
       sourcemap: true,
@@ -28,7 +29,7 @@ const builds = {
     },
   },
   'web-cjs-min': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'cjs',
     output: {
       sourcemap: true,
@@ -38,7 +39,7 @@ const builds = {
     },
   },
   'web-esm': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'es',
     output: {
       sourcemap: true,
@@ -48,7 +49,7 @@ const builds = {
     },
   },
   'web-esm-min': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'es',
     output: {
       sourcemap: true,
@@ -58,7 +59,7 @@ const builds = {
     },
   },
   'web': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'umd',
     output: {
       sourcemap: true,
@@ -68,7 +69,7 @@ const builds = {
     },
   },
   'web-min': {
-    input: resolve('js/main.js'),
+    input: resolve('js/main.ts'),
     format: 'umd',
     output: {
       sourcemap: true,
@@ -87,15 +88,15 @@ function genConfig(opts, environment) {
     external: opts.external,
     format: opts.format,
     output: opts.output,
-    name: opts.name || 'fluide',
+    name: opts.name || 'Fluide',
     plugins: [
       replace({
         __VERSION__: version
       }),
-      // typescript({
-      //   typescript: require('typescript')
-      // }),
-      babel(),
+      typescript({
+        typescript: require('typescript')
+      }),
+      // babel(),
       sourcemaps()
       // alias(Object.assign({}, aliases, opts.alias))
     ].concat(opts.plugins || [])
