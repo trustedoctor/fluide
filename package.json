@@ -19,6 +19,7 @@
     "test": "mocha"
   },
   "main": "dist/fluide.js",
+  "types": "dist/fluide.d.ts",
   "style": "dist/fluide.css",
   "sass": "scss/fluide.scss",
   "author": "Krystian Drożdżyński",
