@@ -17,28 +17,29 @@ var Events = /** @class */ (function () {
         this.isScroling = false;
         this.isWheeling = null;
         this.scrollbar = scrollbar;
-        this.scrollbar.el.onwheel = function (event) { return _this.mouseWheel(_this, event); };
-        this.scrollbar.scroll.onwheel = function (event) { return _this.mouseWheel(_this, event); };
-        this.scrollbar.bar.onmousedown = function (event) { return _this.mouseDown(_this, event); };
-        document.onmouseup = function (event) { return _this.mouseUp(_this, event); };
-        this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(_this, event); };
+        this.scrollbar.el.onwheel = function (event) { return _this.mouseWheel(event); };
+        this.scrollbar.scroll.onwheel = function (event) { return _this.mouseWheel(event); };
+        this.scrollbar.bar.onmousedown = function (event) { return _this.mouseDown(event); };
+        document.onmouseup = function (event) { return _this.mouseUp(event); };
+        this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(event); };
     }
-    Events.prototype.mouseDown = function (_this, event) {
-        _this.isScroling = true;
-        _this.distance = 0;
-        _this.currentY = event.pageY;
-        document.onmousemove = function (event) { return _this.mouseMove(_this, event); };
+    Events.prototype.mouseDown = function (event) {
+        var _this = this;
+        this.isScroling = true;
+        this.distance = 0;
+        this.currentY = event.pageY;
+        document.onmousemove = function (event) { return _this.mouseMove(event); };
     };
-    Events.prototype.mouseMove = function (_this, event) {
+    Events.prototype.mouseMove = function (event) {
         event.preventDefault();
-        var distance = event.pageY - _this.currentY;
-        _this.currentY = event.pageY;
-        if (distance != _this.distance) {
-            _this.distance = distance;
-            _this.scrollbar.move(_this.distance);
+        var distance = event.pageY - this.currentY;
+        this.currentY = event.pageY;
+        if (distance != this.distance) {
+            this.distance = distance;
+            this.scrollbar.move(this.distance);
         }
     };
-    Events.prototype.mouseWheel = function (_this, event) {
+    Events.prototype.mouseWheel = function (event) {
         var _this = this;
         event.preventDefault();
         this.isScroling = true;
@@ -49,24 +50,24 @@ var Events = /** @class */ (function () {
         else {
             distance = event.deltaY;
         }
-        if (distance != _this.distance) {
-            _this.distance = distance;
-            _this.scrollbar.move(_this.distance);
+        if (distance != this.distance) {
+            this.distance = distance;
+            this.scrollbar.move(this.distance);
         }
         clearTimeout(this.isWheeling);
         this.isWheeling = setTimeout(function () {
             _this.isScroling = false;
         }, 250);
     };
-    Events.prototype.mouseUp = function (_this, event) {
+    Events.prototype.mouseUp = function (event) {
         document.onmousemove = null;
-        _this.distance = 0;
-        _this.isScroling = false;
+        this.distance = 0;
+        this.isScroling = false;
     };
-    Events.prototype.userScrolled = function (_this, event) {
-        if (!_this.isScroling) {
-            var position = _this.scrollbar.el.scrollTop;
-            _this.scrollbar.setBarPosition(position);
+    Events.prototype.userScrolled = function (event) {
+        if (!this.isScroling) {
+            var position = this.scrollbar.el.scrollTop;
+            this.scrollbar.setBarPosition(position);
         }
     };
     return Events;
