@@ -17,34 +17,34 @@ export default class Events {
   constructor(scrollbar: Scrollbar) {
     this.scrollbar = scrollbar
 
-    this.scrollbar.el.onwheel = event => this.mouseWheel(this, event)
-    this.scrollbar.scroll.onwheel = event => this.mouseWheel(this, event)
-    this.scrollbar.bar.onmousedown = event => this.mouseDown(this, event)
-    document.onmouseup = event => this.mouseUp(this, event)
+    this.scrollbar.el.onwheel = event => this.mouseWheel(event)
+    this.scrollbar.scroll.onwheel = event => this.mouseWheel(event)
+    this.scrollbar.bar.onmousedown = event => this.mouseDown(event)
+    document.onmouseup = event => this.mouseUp(event)
 
-    this.scrollbar.el.onscroll = event => this.userScrolled(this, event)
+    this.scrollbar.el.onscroll = event => this.userScrolled(event)
   }
 
-  mouseDown(_this: Events, event: MouseEvent) {
-    _this.isScroling = true
-    _this.distance = 0
-    _this.currentY = event.pageY
-    document.onmousemove = event => _this.mouseMove(_this, event)
+  mouseDown(this: Events, event: MouseEvent) {
+    this.isScroling = true
+    this.distance = 0
+    this.currentY = event.pageY
+    document.onmousemove = event => this.mouseMove(event)
   }
 
-  mouseMove(_this: Events, event: MouseEvent) {
+  mouseMove(this: Events, event: MouseEvent) {
     event.preventDefault()
 
-    let distance = event.pageY - _this.currentY
-    _this.currentY = event.pageY
+    let distance = event.pageY - this.currentY
+    this.currentY = event.pageY
 
-    if (distance != _this.distance) {
-      _this.distance = distance
-      _this.scrollbar.move(_this.distance)
+    if (distance != this.distance) {
+      this.distance = distance
+      this.scrollbar.move(this.distance)
     }
   }
 
-  mouseWheel(_this: Events, event: WheelEvent) {
+  mouseWheel(this: Events, event: WheelEvent) {
     event.preventDefault()
     this.isScroling = true;
 
@@ -55,9 +55,9 @@ export default class Events {
       distance = event.deltaY
     }
 
-    if (distance != _this.distance) {
-      _this.distance = distance
-      _this.scrollbar.move(_this.distance)
+    if (distance != this.distance) {
+      this.distance = distance
+      this.scrollbar.move(this.distance)
     }
 
     clearTimeout(this.isWheeling)
@@ -66,17 +66,17 @@ export default class Events {
     }, 250)
   }
 
-  mouseUp(_this: Events, event: MouseEvent) {
+  mouseUp(this: Events, event: MouseEvent) {
     document.onmousemove = null
-    _this.distance = 0
+    this.distance = 0
 
-    _this.isScroling = false
+    this.isScroling = false
   }
 
-  userScrolled(_this: Events, event: UIEvent) {
-    if(!_this.isScroling) {
-      let position = _this.scrollbar.el.scrollTop
-      _this.scrollbar.setBarPosition(position)
+  userScrolled(this: Events, event: UIEvent) {
+    if(!this.isScroling) {
+      let position = this.scrollbar.el.scrollTop
+      this.scrollbar.setBarPosition(position)
     }
   }
 }
