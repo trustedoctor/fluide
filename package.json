@@ -37,7 +37,6 @@
     "chai": "^4.1.2",
     "chokidar": "^1.7.0",
     "clean-css-cli": "^4.1.10",
-    "eslint": "^4.14.0",
     "mocha": "^4.0.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.3",
@@ -51,5 +50,6 @@
     "sass-true": "^3.0.2",
     "typescript": "^2.7.2",
     "uglify-js": "^3.3.3"
+    "tslint": "^5.10.0",
   }
 }
