@@ -1,5 +1,4 @@
 import path from 'path'
-import babel from 'rollup-plugin-babel'
 import replace from 'rollup-plugin-replace'
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript';
@@ -96,7 +95,6 @@ function genConfig(opts, environment) {
       typescript({
         typescript: require('typescript')
       }),
-      // babel(),
       sourcemaps()
       // alias(Object.assign({}, aliases, opts.alias))
     ].concat(opts.plugins || [])
