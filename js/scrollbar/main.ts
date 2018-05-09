@@ -2,12 +2,11 @@ import Events from './events'
 
 export default class Scrollbar {
 
-  private events: Events
-
   public el: HTMLElement
-
   public scroll: HTMLElement
   public bar: HTMLElement
+
+  private events: Events
 
   private height: number
   private scrollHeight: number
@@ -17,7 +16,7 @@ export default class Scrollbar {
   private position: number = 0
   private maxPosition: number = 0
 
-  private scrollClass: number = null
+  private scrollClass: NodeJS.Timer = null
 
   constructor(el: HTMLElement) {
     this.el = el
@@ -28,18 +27,18 @@ export default class Scrollbar {
     this.height = this.el.clientHeight
     this.scrollHeight = this.el.scrollHeight
     this.el.style.overflow = 'hidden'
+    this.el.style.display = 'inline-block'
 
     this.createScroll()
     this.calculateSizes()
   }
 
-  calculateSizes() {
+  public calculateSizes() {
     this.barProportion = parseFloat((this.height / this.scrollHeight).toPrecision(1))
-    
+
     if (this.height * this.barProportion > 26) {
       this.barHeight = this.height * this.barProportion
     } else {
-      // this.barHeight = this.height * this.barProportion
       this.barHeight = 26
     }
 
@@ -48,25 +47,12 @@ export default class Scrollbar {
     this.scroll.style.height = this.height + 'px'
     this.bar.style.height = this.barHeight + 'px'
 
-    this.el.style.width = (this.el.offsetWidth - this.scroll.offsetWidth) + "px"
+    this.el.style.width = null
+    this.el.style.width = (this.el.offsetWidth - this.scroll.offsetWidth) + 'px'
   }
 
-  createScroll() {
-    this.scroll = document.createElement('div')
-    this.scroll.classList.add('scroll-bar')
-
-    this.bar = document.createElement('div')
-    this.bar.classList.add('bar')
-
-    this.scroll.appendChild(this.bar)
-
-    this.events = new Events(this)
-
-    this.el.parentElement.insertBefore(this.scroll, this.el.nextSibling)
-  }
-
-  move(distance: number) {
-    let newPosition = (distance + this.position)
+  public move(distance: number) {
+    const newPosition = (distance + this.position)
 
     if (newPosition <= 0) {
       this.position = 0
@@ -86,8 +72,8 @@ export default class Scrollbar {
     }, 500)
   }
 
-  setBarPosition(scrollPosition: number) {
-    let position = scrollPosition * this.barProportion
+  public setBarPosition(scrollPosition: number) {
+    const position = scrollPosition * this.barProportion
 
     if (position <= 0) {
       this.position = 0;
@@ -97,7 +83,20 @@ export default class Scrollbar {
       this.position = this.maxPosition;
     }
 
-    this.bar.style.marginTop = this.position + "px";
+    this.bar.style.marginTop = this.position + 'px';
   }
 
+  private createScroll() {
+    this.scroll = document.createElement('div')
+    this.scroll.classList.add('scroll-bar')
+
+    this.bar = document.createElement('div')
+    this.bar.classList.add('bar')
+
+    this.scroll.appendChild(this.bar)
+
+    this.events = new Events(this)
+
+    this.el.parentElement.insertBefore(this.scroll, this.el.nextSibling)
+  }
 }
