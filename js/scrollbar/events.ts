@@ -1,7 +1,7 @@
 import { debounce } from '../helpers'
 import Scrollbar from './main'
 
-import { cancelAnimationFrame, requestAnimationFrame } from '../polyfils/animationFrame'
+import { cancelAnimationFrame, requestAnimationFrame } from '../polyfills/animationFrame'
 
 export default class Events {
   private scrollbar: Scrollbar
