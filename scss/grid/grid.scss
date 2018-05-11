@@ -1,9 +1,9 @@
 @import "classes.scss";
 @import "order.scss";
 
-@mixin grid-base() {
+@mixin grid-base {
   .container {
-    @include grid-container();
+    @include grid-container;
 
     &.fluid {
       @include grid-container(100%);
@@ -14,5 +14,5 @@
     }
   }
 
-  @include grid-classes();
+  @include grid-classes;
 }

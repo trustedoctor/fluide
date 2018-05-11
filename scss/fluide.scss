@@ -1,7 +1,7 @@
 @import "utils/reset.scss";
+@import "utils/responsive.scss";
 
 @import "globals.scss";
-@import "responsive.scss";
 
 @import "utils/typography.scss";
 @import "utils/float.scss";
@@ -10,8 +10,9 @@
 @import "components/scrollbar.scss";
 @import "components/modal.scss";
 
-@include typography();
-@include text-aligments();
-@include grid-base();
-@include grid-order();
-@include scrollbar-default();
+@include typography;
+@include text-aligments;
+@include grid-base;
+@include grid-order;
+@include scrollbar-default;
+@include modal;
