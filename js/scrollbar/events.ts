@@ -50,6 +50,7 @@ export default class Events {
   }
 
   private mouseDown(this: Events, event: MouseEvent) {
+    event.preventDefault()
     this.isScroling = true
     this.distance = 0
     this.currentY = event.pageY

@@ -1,4 +1,4 @@
-@mixin scrollbar-default() {
+@mixin scrollbar-default {
   .scroll-content {
     display: inline-block;
     width: 100%;
@@ -9,18 +9,18 @@
     width: 12px;
     overflow: hidden;
     opacity: 0;
-    transition: opacity .5s cubic-bezier(0, 1, 1, 1);
+    transition: opacity 0.5s cubic-bezier(0, 1, 1, 1);
   }
 
   .scroll-content + .scroll-bar:hover, .scroll-content + .scroll-bar.scroll-active {
     opacity: 1;
   }
 
-  .scroll-content + .scroll-bar { 
+  .scroll-content + .scroll-bar {
     & > .bar {
       width: 10px;
       margin: 0 1px;
-      background: rgba(0, 0, 0, .3);
+      background: rgba(0, 0, 0, 0.3);
       opacity: .8;
       border-radius: 16px;
       overflow: hidden;
@@ -32,7 +32,7 @@
 
       &:active {
         opacity: 1;
-        background: rgba(0, 0, 0, .5);
+        background: rgba(0, 0, 0, 0.5);
       }
     }
   }

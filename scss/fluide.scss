@@ -7,7 +7,7 @@
 @import "utils/float.scss";
 @import "grid/grid.scss";
 
-@import "scrollbar/default.scss";
+@import "components/scrollbar.scss";
 
 @include typography();
 @include text-aligments();
