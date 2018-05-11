@@ -6,10 +6,13 @@ export default class Scrollbar {
   public scroll: HTMLElement
   public bar: HTMLElement
 
+  public scrollHeight: number
+
+  public height: number
+  public width: number
+
   private events: Events
 
-  private height: number
-  private scrollHeight: number
   private barProportion: number
   private barHeight: number
 
@@ -23,17 +26,21 @@ export default class Scrollbar {
 
     this.el.classList.add('scroll-content')
 
-    this.el.style.overflow = 'auto'
-    this.height = this.el.clientHeight
-    this.scrollHeight = this.el.scrollHeight
-    this.el.style.overflow = 'hidden'
-    this.el.style.display = 'inline-block'
-
     this.createScroll()
     this.calculateSizes()
   }
 
   public calculateSizes() {
+    this.el.style.overflow = 'auto'
+    this.height = this.el.clientHeight
+    this.width = this.el.clientWidth
+    this.scrollHeight = this.el.scrollHeight
+    this.el.style.overflow = 'hidden'
+    this.el.style.display = 'inline-block'
+
+    this.el.style.width = null
+    this.el.style.width = 'calc(' + ('100% - ' + this.scroll.offsetWidth) + 'px)'
+
     this.barProportion = parseFloat((this.height / this.scrollHeight).toPrecision(1))
 
     if (this.height * this.barProportion > 26) {
@@ -47,8 +54,7 @@ export default class Scrollbar {
     this.scroll.style.height = this.height + 'px'
     this.bar.style.height = this.barHeight + 'px'
 
-    this.el.style.width = null
-    this.el.style.width = (this.el.offsetWidth - this.scroll.offsetWidth) + 'px'
+    this.setBarPosition(this.el.scrollTop)
   }
 
   public move(distance: number) {

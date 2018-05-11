@@ -1,6 +1,8 @@
 import { debounce } from '../helpers'
 import Scrollbar from './main'
 
+import { cancelAnimationFrame, requestAnimationFrame } from '../polyfils/animationFrame'
+
 export default class Events {
   private scrollbar: Scrollbar
   private currentY: number
@@ -11,7 +13,9 @@ export default class Events {
   private isScroling: boolean = false
   private isWheeling: NodeJS.Timer = null
 
-  // TODO: react on scroll changed by user (element.scrollTop = (...)), by binding event listener
+  private watcher: number = null
+  private fps: number = 1000 / 16
+  private lastWatched: number
 
   constructor(scrollbar: Scrollbar) {
     this.scrollbar = scrollbar
@@ -22,7 +26,27 @@ export default class Events {
     this.scrollbar.el.onscroll = event => this.userScrolled(event)
 
     document.onmouseup = event => this.mouseUp(event)
-    window.onresize = event => this.scrollbar.calculateSizes.call(scrollbar)
+
+    this.lastWatched = Date.now()
+    this.watcher = requestAnimationFrame(() => this.tick.call(this));
+  }
+
+  private tick() {
+    cancelAnimationFrame(this.watcher);
+    this.watcher = requestAnimationFrame(() => this.tick.call(this));
+
+    const elapsed: number = Date.now() - this.lastWatched
+    if (elapsed > this.fps) {
+      this.lastWatched = Date.now() - (elapsed % this.fps)
+
+      if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
+        this.scrollbar.calculateSizes.call(this.scrollbar)
+      }
+
+      if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
+        this.scrollbar.calculateSizes.call(this.scrollbar)
+      }
+    }
   }
 
   private mouseDown(this: Events, event: MouseEvent) {
