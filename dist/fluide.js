@@ -4,28 +4,141 @@
  * Released under the MIT License.
  */
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-    (global.Fluide = factory());
-}(this, (function () { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+    typeof define === 'function' && define.amd ? define(['exports'], factory) :
+    (factory((global.Fluide = {})));
+}(this, (function (exports) { 'use strict';
+
+    function __extends(d, b) {
+        for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+
+    var Modal = /** @class */ (function () {
+        function Modal(el, options) {
+            if (options === void 0) { options = {
+                closeable: true,
+            }; }
+            this.isOpened = false;
+            if (el instanceof HTMLElement) {
+                this.el = el;
+            }
+            else {
+                this.el = document.querySelector(el);
+            }
+            this.options = options;
+            this.backdrop = document.createElement('div');
+            this.backdrop.className = 'modal-backdrop';
+        }
+        Modal.prototype.open = function () {
+            this.isOpened = true;
+            this.el.style.display = 'block';
+            this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling);
+            this.bindEvents();
+        };
+        Modal.prototype.close = function () {
+            this.isOpened = false;
+            this.el.style.display = 'none';
+            this.el.parentElement.removeChild(this.backdrop);
+        };
+        Object.defineProperty(Modal.prototype, "closeable", {
+            get: function () {
+                return this.options.closeable;
+            },
+            set: function (state) {
+                this.options.closeable = state;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Modal.prototype.bindEvents = function () {
+            var _this = this;
+            this.backdrop.onclick = (this.options.closeable ? function (event) {
+                if (_this.backdrop === event.target) {
+                    _this.close();
+                }
+            } : null);
+        };
+        return Modal;
+    }());
+
+    var Props = /** @class */ (function () {
+        function Props() {
+            this.requestAnimFrameLastCallValue = 0;
+        }
+        Object.defineProperty(Props, "all", {
+            get: function () {
+                if (typeof window._fluide === typeof undefined) {
+                    window._fluide = new Props();
+                }
+                return window._fluide;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Props, "requestAnimFrameLastCall", {
+            get: function () {
+                return Props.all.requestAnimFrameLastCallValue;
+            },
+            set: function (value) {
+                Props.all.requestAnimFrameLastCallValue = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Props;
+    }());
+
+    var requestAnimationFrame = window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        (function (callback) {
+            var currTime = new Date().getTime();
+            var lastCall = Props.requestAnimFrameLastCall;
+            var timeToCall = Math.max(0, 16 - (currTime - lastCall));
+            var id = window.setTimeout(function () { return callback(currTime + timeToCall); }, timeToCall);
+            Props.requestAnimFrameLastCall = currTime + timeToCall;
+            return id;
+        });
+    var cancelAnimationFrame = window.cancelAnimationFrame ||
+        window.webkitCancelAnimationFrame ||
+        (function (id) { return window.clearTimeout(id); });
 
     var Events = /** @class */ (function () {
-        // TODO: react on scroll changed by user (element.scrollTop = (...)), by binding event listener
         function Events(scrollbar) {
             var _this = this;
             this.isMac = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i);
             this.isScroling = false;
             this.isWheeling = null;
+            this.watcher = null;
+            this.fps = 1000 / 16;
             this.scrollbar = scrollbar;
             this.scrollbar.el.onwheel = function (event) { return _this.mouseWheel(event); };
             this.scrollbar.scroll.onwheel = function (event) { return _this.mouseWheel(event); };
             this.scrollbar.bar.onmousedown = function (event) { return _this.mouseDown(event); };
             this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(event); };
             document.onmouseup = function (event) { return _this.mouseUp(event); };
-            window.onresize = function (event) { return _this.scrollbar.calculateSizes.call(scrollbar); };
+            this.lastWatched = Date.now();
+            this.watcher = requestAnimationFrame(function () { return _this.tick.call(_this); });
         }
+        Events.prototype.tick = function () {
+            var _this = this;
+            cancelAnimationFrame(this.watcher);
+            this.watcher = requestAnimationFrame(function () { return _this.tick.call(_this); });
+            var elapsed = Date.now() - this.lastWatched;
+            if (elapsed > this.fps) {
+                this.lastWatched = Date.now() - (elapsed % this.fps);
+                if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
+                    this.scrollbar.calculateSizes.call(this.scrollbar);
+                }
+                if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
+                    this.scrollbar.calculateSizes.call(this.scrollbar);
+                }
+            }
+        };
         Events.prototype.mouseDown = function (event) {
             var _this = this;
+            event.preventDefault();
             this.isScroling = true;
             this.distance = 0;
             this.currentY = event.pageY;
@@ -81,15 +194,18 @@
             this.scrollClass = null;
             this.el = el;
             this.el.classList.add('scroll-content');
-            this.el.style.overflow = 'auto';
-            this.height = this.el.clientHeight;
-            this.scrollHeight = this.el.scrollHeight;
-            this.el.style.overflow = 'hidden';
-            this.el.style.display = 'inline-block';
             this.createScroll();
             this.calculateSizes();
         }
         Scrollbar.prototype.calculateSizes = function () {
+            this.el.style.overflow = 'auto';
+            this.height = this.el.clientHeight;
+            this.width = this.el.clientWidth;
+            this.scrollHeight = this.el.scrollHeight;
+            this.el.style.overflow = 'hidden';
+            this.el.style.display = 'inline-block';
+            this.el.style.width = null;
+            this.el.style.width = 'calc(' + ('100% - ' + this.scroll.offsetWidth) + 'px)';
             this.barProportion = parseFloat((this.height / this.scrollHeight).toPrecision(1));
             if (this.height * this.barProportion > 26) {
                 this.barHeight = this.height * this.barProportion;
@@ -100,8 +216,7 @@
             this.maxPosition = this.height - this.barHeight;
             this.scroll.style.height = this.height + 'px';
             this.bar.style.height = this.barHeight + 'px';
-            this.el.style.width = null;
-            this.el.style.width = (this.el.offsetWidth - this.scroll.offsetWidth) + 'px';
+            this.setBarPosition(this.el.scrollTop);
         };
         Scrollbar.prototype.move = function (distance) {
             var _this = this;
@@ -148,12 +263,64 @@
         return Scrollbar;
     }());
 
-    var main = {
-        version: '1.0.0-alpha.1',
-        Scrollbar: Scrollbar,
+    var Module = /** @class */ (function () {
+        function Module(el) {
+            if (el instanceof HTMLElement) {
+                this.el = el;
+            }
+            else {
+                this.el = document.querySelector(el);
+            }
+            if (this.el === null) {
+                throw new Error('Provided Element is null or cannot be found.');
+            }
+        }
+        return Module;
+    }());
+
+    var Tooltip = /** @class */ (function (_super) {
+        __extends(Tooltip, _super);
+        function Tooltip(el) {
+            var _this = _super.call(this, el) || this;
+            _this.el.onmouseenter = function (event) { return _this.mouseEnter(event); };
+            _this.el.onmouseleave = function (event) { return _this.mouseLeave(event); };
+            return _this;
+        }
+        Tooltip.prototype.mouseEnter = function (event) {
+            var text = this.el.getAttribute('alt');
+            this.tooltip = document.createElement('div');
+            this.tooltip.className = 'tooltip';
+            this.tooltip.innerHTML = text;
+            this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling);
+            var _a = this.getPosition(), left = _a.left, top = _a.top;
+            this.tooltip.style.left = left + 'px';
+            this.tooltip.style.top = top + 'px';
+        };
+        Tooltip.prototype.mouseLeave = function (event) {
+            this.el.parentElement.removeChild(this.tooltip);
+        };
+        Tooltip.prototype.getPosition = function () {
+            var left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
+            var top = this.el.offsetTop + this.el.clientHeight + 5;
+            return {
+                left: left, top: top,
+            };
+        };
+        return Tooltip;
+    }(Module));
+
+    var version = '1.0.0-alpha.1';
+    var fluide = {
+        Scrollbar: Scrollbar, Modal: Modal, Tooltip: Tooltip, version: version,
     };
 
-    return main;
+    exports.Modal = Modal;
+    exports.Scrollbar = Scrollbar;
+    exports.Tooltip = Tooltip;
+    exports.version = version;
+    exports.default = fluide;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
 //# sourceMappingURL=fluide.js.map

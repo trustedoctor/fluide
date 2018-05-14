@@ -1,41 +1,108 @@
+declare module "modal/main" {
+    export default class Modal {
+        private el;
+        private options;
+        private isOpened;
+        private backdrop;
+        constructor(el: HTMLElement | string, options?: Options);
+        open(): void;
+        close(): void;
+        closeable: boolean;
+        private bindEvents();
+    }
+    export interface Options {
+        closeable: boolean;
+    }
+}
+declare module "helpers" {
+    export function debounce(callback: () => void, time: number): () => void;
+}
+declare module "polyfills/props" {
+    export default class Props {
+        requestAnimFrameLastCallValue: number;
+        static readonly all: Props;
+        static requestAnimFrameLastCall: number;
+    }
+    global  {
+        interface Window {
+            _fluide: Props;
+        }
+    }
+}
+declare module "polyfills/animationFrame" {
+    const requestAnimationFrame: (callback: FrameRequestCallback) => number;
+    const cancelAnimationFrame: (id: number) => void;
+    export { cancelAnimationFrame, requestAnimationFrame };
+}
+declare module "scrollbar/events" {
+    import Scrollbar from "scrollbar/main";
+    export default class Events {
+        private scrollbar;
+        private currentY;
+        private distance;
+        private isMac;
+        private isScroling;
+        private isWheeling;
+        private watcher;
+        private fps;
+        private lastWatched;
+        constructor(scrollbar: Scrollbar);
+        private tick();
+        private mouseDown(this, event);
+        private mouseMove(this, event);
+        private mouseWheel(this, event);
+        private mouseUp(this, event);
+        private userScrolled(this, event);
+    }
+}
+declare module "scrollbar/main" {
+    export default class Scrollbar {
+        el: HTMLElement;
+        scroll: HTMLElement;
+        bar: HTMLElement;
+        scrollHeight: number;
+        height: number;
+        width: number;
+        private events;
+        private barProportion;
+        private barHeight;
+        private position;
+        private maxPosition;
+        private scrollClass;
+        constructor(el: HTMLElement);
+        calculateSizes(): void;
+        move(distance: number): void;
+        setBarPosition(scrollPosition: number): void;
+        private createScroll();
+    }
+}
+declare module "module" {
+    export default abstract class Module {
+        protected el: HTMLElement;
+        constructor(el: HTMLElement | string);
+    }
+}
+declare module "tooltip/main" {
+    import Module from "module";
+    export default class Tooltip extends Module {
+        private tooltip;
+        constructor(el: HTMLElement | string);
+        private mouseEnter(this, event);
+        private mouseLeave(this, event);
+        private getPosition();
+    }
+}
 declare module "fluide" {
-  export class Events {
-    private scrollbar;
-    private currentY;
-    private distance;
-    private isMac;
-    private isScroling;
-    private isWheeling;
-    constructor(scrollbar: Scrollbar);
-    mouseDown(this: Events, event: MouseEvent): void;
-    mouseMove(this: Events, event: MouseEvent): void;
-    mouseWheel(this: Events, event: WheelEvent): void;
-    mouseUp(this: Events, event: MouseEvent): void;
-    userScrolled(this: Events, event: UIEvent): void;
-  }
-
-  export class Scrollbar {
-    private events;
-    el: HTMLElement;
-    scroll: HTMLElement;
-    bar: HTMLElement;
-    private height;
-    private scrollHeight;
-    private barProportion;
-    private barHeight;
-    private position;
-    private maxPosition;
-    private scrollClass;
-    constructor(el: HTMLElement);
-    calculateSizes(): void;
-    createScroll(): void;
-    move(distance: number): void;
-    setBarPosition(scrollPosition: number): void;
-  }
-  
-  const _default: {
-    version: string;
-    Scrollbar: typeof Scrollbar;
-  };
-  export default _default;
+    import Modal from "modal/main";
+    import Scrollbar from "scrollbar/main";
+    import Tooltip from "tooltip/main";
+    const version = "__VERSION__";
+    export { Modal, Scrollbar, Tooltip, version };
+    const _default: {
+        Scrollbar: typeof Scrollbar;
+        Modal: typeof Modal;
+        Tooltip: typeof Tooltip;
+        version: string;
+    };
+    export default _default;
 }
