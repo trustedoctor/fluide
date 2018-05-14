@@ -6,8 +6,9 @@
     "js:compile": "rollup -c build/config.js --environment TARGET:web",
     "js:watch": "rollup -w -c build/config.js --environment TARGET:web",
     "js:watch2": "nodemon --watch js --exec \"yarn run js:compile\"",
-    "js:dist": "echo \"TODO\"",
+    "js:dist": "npm-run-all --parallel js:compile --sequential js:minify js:types",
     "js:minify": "uglifyjs --compress typeofs=false --mangle --comments \"/^!/\" --source-map \"content=dist/fluide.js.map,includeSources,url=fluide.min.js.map\" --output dist/fluide.min.js dist/fluide.js",
+    "js:types": "rm ./dist/fluide.d.ts && tsc --rootDir \"./js\" --module \"AMD\" --outFile \"./dist/fluide.d.ts\" -d --emitDeclarationOnly",
     "css:compile": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/fluide.scss dist/fluide.css",
     "css:watch": "node-sass -w --output-style expanded --source-map true --source-map-contents true --precision 6 scss/fluide.scss dist/fluide.css",
     "css:dist": "npm-run-all --parallel css:compile --sequential css:autoprefixer css:minify",
@@ -16,7 +17,8 @@
     "borwsersync:run": "browser-sync start --files 'dist' 'example' --startPath 'example' --server './'",
     "all:watch": "npm-run-all --parallel js:watch css:watch",
     "all:watch:borwsersync": "npm-run-all --parallel borwsersync:run all:watch",
-    "test": "mocha"
+    "all:dist": "npm-run-all --parallel css:dist js:dist",
+    "test": "mocha -r ts-node/register"
   },
   "main": "dist/fluide.js",
   "types": "dist/fluide.d.ts",

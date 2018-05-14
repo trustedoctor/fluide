@@ -54,10 +54,30 @@
         </div>
       </div>
     </div>
+    <div class="row row-margin">
+      <div class="small-12 cell">
+        <div class="box">
+          <button onclick="modal.open()" alt="New button tooltip">Open dialog</button>
+          <div class="modal test-modal">
+            test
+          </div>
+          <button onclick="modalNotCloseable.open()">Open not closeable dialog</button>
+          <div class="modal test-modal-not-closeable">
+            test
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="../dist/fluide.js"></script>
   <script>
-    new Fluide.Scrollbar(document.querySelector('.scrollbar.default'))
+    var scrollbar = new Fluide.Scrollbar(document.querySelector('.scrollbar.default'))
+    var modal = new Fluide.Modal('.test-modal')
+    var modalNotCloseable = new Fluide.Modal(document.querySelector('.test-modal-not-closeable'), {
+      closeable: false
+    })
+
+    var tooltip = new Fluide.Tooltip('button')
   </script>
   <script>
     

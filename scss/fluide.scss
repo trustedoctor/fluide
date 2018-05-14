@@ -9,6 +9,7 @@
 
 @import "components/scrollbar.scss";
 @import "components/modal.scss";
+@import "components/tooltip.scss";
 
 @include typography;
 @include text-aligments;
@@ -16,3 +17,4 @@
 @include grid-order;
 @include scrollbar-default;
 @include modal;
+@include tooltip;
