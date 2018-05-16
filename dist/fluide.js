@@ -140,34 +140,29 @@
             var _this = this;
             event.preventDefault();
             this.isScroling = true;
-            this.distance = 0;
             this.currentY = event.pageY;
             document.onmousemove = function (e) { return _this.mouseMove(e); };
         };
         Events.prototype.mouseMove = function (event) {
             event.preventDefault();
-            var distance = event.pageY - this.currentY;
+            var moveDistance = (event.pageY - this.currentY);
+            var scrollDistance = (moveDistance / this.scrollbar.maxPosition) * (this.scrollbar.scrollHeight - this.scrollbar.height);
             this.currentY = event.pageY;
-            if (distance !== this.distance) {
-                this.distance = distance;
-                this.scrollbar.move(this.distance);
-            }
+            this.scrollbar.move(scrollDistance);
         };
         Events.prototype.mouseWheel = function (event) {
             var _this = this;
             event.preventDefault();
             this.isScroling = true;
             var distance = null;
-            if (this.isMac) {
-                distance = event.deltaY * 0.1;
+            if (event.wheelDelta) {
+                distance = -((event.wheelDelta % 120 - 0) === -0 ? event.wheelDelta / 10 : event.wheelDelta);
             }
             else {
-                distance = event.deltaY;
+                var rawAmmount = event.deltaY ? event.deltaY : event.detail;
+                distance = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
             }
-            if (distance !== this.distance) {
-                this.distance = distance;
-                this.scrollbar.move(this.distance);
-            }
+            this.scrollbar.move(distance);
             clearTimeout(this.isWheeling);
             this.isWheeling = setTimeout(function () {
                 _this.isScroling = false;
@@ -175,13 +170,11 @@
         };
         Events.prototype.mouseUp = function (event) {
             document.onmousemove = null;
-            this.distance = 0;
             this.isScroling = false;
         };
         Events.prototype.userScrolled = function (event) {
             if (!this.isScroling) {
-                var position = this.scrollbar.el.scrollTop;
-                this.scrollbar.setBarPosition(position);
+                this.scrollbar.setBarPosition();
             }
         };
         return Events;
@@ -206,40 +199,31 @@
             this.el.style.display = 'inline-block';
             this.el.style.width = null;
             this.el.style.width = 'calc(' + ('100% - ' + this.scroll.offsetWidth) + 'px)';
-            this.barProportion = parseFloat((this.height / this.scrollHeight).toPrecision(1));
-            if (this.height * this.barProportion > 26) {
-                this.barHeight = this.height * this.barProportion;
+            var visibleProportion = this.height / this.scrollHeight;
+            if (this.height * visibleProportion > 30) {
+                this.visibleProportion = visibleProportion;
+                this.barHeight = this.height * visibleProportion;
             }
             else {
-                this.barHeight = 26;
+                this.visibleProportion = 30 / this.height;
+                this.barHeight = 30;
             }
             this.maxPosition = this.height - this.barHeight;
             this.scroll.style.height = this.height + 'px';
             this.bar.style.height = this.barHeight + 'px';
-            this.setBarPosition(this.el.scrollTop);
+            this.setBarPosition();
         };
         Scrollbar.prototype.move = function (distance) {
             var _this = this;
-            var newPosition = (distance + this.position);
-            if (newPosition <= 0) {
-                this.position = 0;
-            }
-            else if (newPosition < this.maxPosition) {
-                this.position = newPosition;
-            }
-            else {
-                this.position = this.maxPosition;
-            }
-            this.el.scrollTop = (this.position / this.maxPosition) * (this.scrollHeight - this.height);
-            this.bar.style.marginTop = this.position + 'px';
+            this.el.scrollTop = (distance + this.el.scrollTop);
             this.scroll.className = this.scroll.className.indexOf('scroll-active') > 0 ? this.scroll.className : this.scroll.className + ' scroll-active';
             clearTimeout(this.scrollClass);
             this.scrollClass = setTimeout(function () {
                 _this.scroll.className = _this.scroll.className.replace(/\s*scroll-active\s*/g, '');
             }, 500);
         };
-        Scrollbar.prototype.setBarPosition = function (scrollPosition) {
-            var position = scrollPosition * this.barProportion;
+        Scrollbar.prototype.setBarPosition = function () {
+            var position = (this.el.scrollTop / (this.scrollHeight - this.height)) * this.maxPosition;
             if (position <= 0) {
                 this.position = 0;
             }

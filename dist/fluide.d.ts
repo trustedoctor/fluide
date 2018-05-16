@@ -39,7 +39,6 @@ declare module "scrollbar/events" {
     export default class Events {
         private scrollbar;
         private currentY;
-        private distance;
         private isMac;
         private isScroling;
         private isWheeling;
@@ -63,16 +62,16 @@ declare module "scrollbar/main" {
         scrollHeight: number;
         height: number;
         width: number;
+        visibleProportion: number;
         private events;
-        private barProportion;
         private barHeight;
         private position;
-        private maxPosition;
+        maxPosition: number;
         private scrollClass;
         constructor(el: HTMLElement);
         calculateSizes(): void;
         move(distance: number): void;
-        setBarPosition(scrollPosition: number): void;
+        setBarPosition(): void;
         private createScroll();
     }
 }
