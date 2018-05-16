@@ -173,17 +173,15 @@
             this.isScroling = false;
         };
         Events.prototype.userScrolled = function (event) {
-            if (!this.isScroling) {
-                this.scrollbar.setBarPosition();
-            }
+            this.scrollbar.setBarPosition();
         };
         return Events;
     }());
 
     var Scrollbar = /** @class */ (function () {
         function Scrollbar(el) {
-            this.position = 0;
             this.maxPosition = 0;
+            this.position = 0;
             this.scrollClass = null;
             this.el = el;
             this.el.classList.add('scroll-content');
@@ -193,12 +191,12 @@
         Scrollbar.prototype.calculateSizes = function () {
             this.el.style.overflow = 'auto';
             this.height = this.el.clientHeight;
-            this.width = this.el.clientWidth;
             this.scrollHeight = this.el.scrollHeight;
             this.el.style.overflow = 'hidden';
             this.el.style.display = 'inline-block';
             this.el.style.width = null;
-            this.el.style.width = 'calc(' + ('100% - ' + this.scroll.offsetWidth) + 'px)';
+            this.el.style.width = 'calc(100% - ' + this.scroll.offsetWidth + 'px)';
+            this.width = this.el.clientWidth;
             var visibleProportion = this.height / this.scrollHeight;
             if (this.height * visibleProportion > 30) {
                 this.visibleProportion = visibleProportion;

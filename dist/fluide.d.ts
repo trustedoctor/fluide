@@ -60,13 +60,13 @@ declare module "scrollbar/main" {
         scroll: HTMLElement;
         bar: HTMLElement;
         scrollHeight: number;
+        maxPosition: number;
         height: number;
         width: number;
-        visibleProportion: number;
+        private visibleProportion;
         private events;
         private barHeight;
         private position;
-        maxPosition: number;
         private scrollClass;
         constructor(el: HTMLElement);
         calculateSizes(): void;
