@@ -7,17 +7,17 @@ export default class Scrollbar {
   public bar: HTMLElement
 
   public scrollHeight: number
+  public maxPosition: number = 0
 
   public height: number
   public width: number
 
+  private visibleProportion: number
+
   private events: Events
 
-  private barProportion: number
   private barHeight: number
-
   private position: number = 0
-  private maxPosition: number = 0
 
   private scrollClass: NodeJS.Timer = null
 
@@ -39,14 +39,16 @@ export default class Scrollbar {
     this.el.style.display = 'inline-block'
 
     this.el.style.width = null
-    this.el.style.width = 'calc(' + ('100% - ' + this.scroll.offsetWidth) + 'px)'
+    this.el.style.width = 'calc(100% - ' + this.scroll.offsetWidth + 'px)'
 
-    this.barProportion = parseFloat((this.height / this.scrollHeight).toPrecision(1))
+    const visibleProportion = this.height / this.scrollHeight
 
-    if (this.height * this.barProportion > 26) {
-      this.barHeight = this.height * this.barProportion
+    if (this.height * visibleProportion > 30) {
+      this.visibleProportion = visibleProportion
+      this.barHeight = this.height * visibleProportion
     } else {
-      this.barHeight = 26
+      this.visibleProportion = 30 / this.height
+      this.barHeight = 30
     }
 
     this.maxPosition = this.height - this.barHeight
@@ -54,22 +56,11 @@ export default class Scrollbar {
     this.scroll.style.height = this.height + 'px'
     this.bar.style.height = this.barHeight + 'px'
 
-    this.setBarPosition(this.el.scrollTop)
+    this.setBarPosition()
   }
 
   public move(distance: number) {
-    const newPosition = (distance + this.position)
-
-    if (newPosition <= 0) {
-      this.position = 0
-    } else if (newPosition < this.maxPosition) {
-      this.position = newPosition
-    } else {
-      this.position = this.maxPosition
-    }
-
-    this.el.scrollTop = (this.position / this.maxPosition) * (this.scrollHeight - this.height)
-    this.bar.style.marginTop = this.position + 'px'
+    this.el.scrollTop = (distance + this.el.scrollTop)
 
     this.scroll.className = this.scroll.className.indexOf('scroll-active') > 0 ? this.scroll.className : this.scroll.className + ' scroll-active'
     clearTimeout(this.scrollClass)
@@ -78,8 +69,8 @@ export default class Scrollbar {
     }, 500)
   }
 
-  public setBarPosition(scrollPosition: number) {
-    const position = scrollPosition * this.barProportion
+  public setBarPosition() {
+    const position = (this.el.scrollTop / (this.scrollHeight - this.height)) * this.maxPosition
 
     if (position <= 0) {
       this.position = 0;

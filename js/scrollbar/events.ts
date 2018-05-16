@@ -6,7 +6,6 @@ import { cancelAnimationFrame, requestAnimationFrame } from '../polyfills/animat
 export default class Events {
   private scrollbar: Scrollbar
   private currentY: number
-  private distance: number
 
   private isMac: RegExpMatchArray = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)
 
@@ -52,7 +51,6 @@ export default class Events {
   private mouseDown(this: Events, event: MouseEvent) {
     event.preventDefault()
     this.isScroling = true
-    this.distance = 0
     this.currentY = event.pageY
     document.onmousemove = e => this.mouseMove(e)
   }
@@ -60,13 +58,11 @@ export default class Events {
   private mouseMove(this: Events, event: MouseEvent) {
     event.preventDefault()
 
-    const distance = event.pageY - this.currentY
+    const moveDistance = (event.pageY - this.currentY)
+    const scrollDistance = (moveDistance / this.scrollbar.maxPosition) * (this.scrollbar.scrollHeight - this.scrollbar.height)
     this.currentY = event.pageY
 
-    if (distance !== this.distance) {
-      this.distance = distance
-      this.scrollbar.move(this.distance)
-    }
+    this.scrollbar.move(scrollDistance)
   }
 
   private mouseWheel(this: Events, event: WheelEvent) {
@@ -74,16 +70,15 @@ export default class Events {
     this.isScroling = true;
 
     let distance = null
-    if (this.isMac) {
-      distance = event.deltaY * 0.1
+
+    if (event.wheelDelta) {
+      distance = -((event.wheelDelta % 120 - 0) === -0 ? event.wheelDelta / 10 : event.wheelDelta);
     } else {
-      distance = event.deltaY
+      const rawAmmount = event.deltaY ? event.deltaY : event.detail;
+      distance = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
     }
 
-    if (distance !== this.distance) {
-      this.distance = distance
-      this.scrollbar.move(this.distance)
-    }
+    this.scrollbar.move(distance)
 
     clearTimeout(this.isWheeling)
     this.isWheeling = setTimeout(() => {
@@ -93,15 +88,12 @@ export default class Events {
 
   private mouseUp(this: Events, event: MouseEvent) {
     document.onmousemove = null
-    this.distance = 0
-
     this.isScroling = false
   }
 
   private userScrolled(this: Events, event: UIEvent) {
     if (!this.isScroling) {
-      const position = this.scrollbar.el.scrollTop
-      this.scrollbar.setBarPosition(position)
+      this.scrollbar.setBarPosition()
     }
   }
 }
