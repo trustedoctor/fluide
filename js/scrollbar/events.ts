@@ -92,8 +92,6 @@ export default class Events {
   }
 
   private userScrolled(this: Events, event: UIEvent) {
-    if (!this.isScroling) {
-      this.scrollbar.setBarPosition()
-    }
+    this.scrollbar.setBarPosition()
   }
 }

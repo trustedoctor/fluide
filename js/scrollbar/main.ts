@@ -33,13 +33,13 @@ export default class Scrollbar {
   public calculateSizes() {
     this.el.style.overflow = 'auto'
     this.height = this.el.clientHeight
-    this.width = this.el.clientWidth
     this.scrollHeight = this.el.scrollHeight
     this.el.style.overflow = 'hidden'
     this.el.style.display = 'inline-block'
 
     this.el.style.width = null
     this.el.style.width = 'calc(100% - ' + this.scroll.offsetWidth + 'px)'
+    this.width = this.el.clientWidth
 
     const visibleProportion = this.height / this.scrollHeight
 
