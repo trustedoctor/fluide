@@ -82,7 +82,6 @@
         function Events(scrollbar) {
             var _this = this;
             this.isMac = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i);
-            this.isScroling = false;
             this.isWheeling = null;
             this.watcher = null;
             this.fps = 1000 / 24;
@@ -92,28 +91,21 @@
             this.scrollbar.bar.onmousedown = function (event) { return _this.mouseDown(event); };
             this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(event); };
             document.onmouseup = function (event) { return _this.mouseUp(event); };
-            this.lastWatched = Date.now();
             this.watcher = setTimeout(function () { return _this.tick.call(_this); }, this.fps);
         }
         Events.prototype.tick = function () {
             var _this = this;
-            clearTimeout(this.watcher);
             this.watcher = setTimeout(function () { return _this.tick.call(_this); }, this.fps);
-            var elapsed = Date.now() - this.lastWatched;
-            if (elapsed > this.fps) {
-                this.lastWatched = Date.now() - (elapsed % this.fps);
-                if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
-                    this.scrollbar.calculateSizes.call(this.scrollbar);
-                }
-                if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
-                    this.scrollbar.calculateSizes.call(this.scrollbar);
-                }
+            if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
+                this.scrollbar.calculateSizes.call(this.scrollbar);
+            }
+            if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
+                this.scrollbar.calculateSizes.call(this.scrollbar);
             }
         };
         Events.prototype.mouseDown = function (event) {
             var _this = this;
             event.preventDefault();
-            this.isScroling = true;
             this.currentY = event.pageY;
             document.onmousemove = function (e) { return _this.mouseMove(e); };
         };
@@ -125,26 +117,18 @@
             this.scrollbar.move(scrollDistance);
         };
         Events.prototype.mouseWheel = function (event) {
-            var _this = this;
             event.preventDefault();
-            this.isScroling = true;
             var distance = null;
-            if (event.wheelDelta) {
-                distance = -((event.wheelDelta % 120 - 0) === -0 ? event.wheelDelta / 10 : event.wheelDelta);
+            if (event.wheelDelta && (event.wheelDelta % 120) === 0) {
+                distance = -(event.wheelDelta / 10);
             }
             else {
-                var rawAmmount = event.deltaY ? event.deltaY : event.detail;
-                distance = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
+                distance = event.deltaY;
             }
             this.scrollbar.move(distance);
-            clearTimeout(this.isWheeling);
-            this.isWheeling = setTimeout(function () {
-                _this.isScroling = false;
-            }, 250);
         };
         Events.prototype.mouseUp = function (event) {
             document.onmousemove = null;
-            this.isScroling = false;
         };
         Events.prototype.userScrolled = function (event) {
             this.scrollbar.setBarPosition();

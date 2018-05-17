@@ -29,11 +29,9 @@ declare module "scrollbar/events" {
         private scrollbar;
         private currentY;
         private isMac;
-        private isScroling;
         private isWheeling;
         private watcher;
         private fps;
-        private lastWatched;
         constructor(scrollbar: Scrollbar);
         private tick();
         private mouseDown(this, event);
