@@ -63,46 +63,20 @@
         return Modal;
     }());
 
-    var Props = /** @class */ (function () {
-        function Props() {
-            this.requestAnimFrameLastCallValue = 0;
+    var Module = /** @class */ (function () {
+        function Module(el) {
+            if (el instanceof HTMLElement) {
+                this.el = el;
+            }
+            else {
+                this.el = document.querySelector(el);
+            }
+            if (this.el === null) {
+                throw new Error('Provided Element is null or cannot be found.');
+            }
         }
-        Object.defineProperty(Props, "all", {
-            get: function () {
-                if (typeof window._fluide === typeof undefined) {
-                    window._fluide = new Props();
-                }
-                return window._fluide;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Props, "requestAnimFrameLastCall", {
-            get: function () {
-                return Props.all.requestAnimFrameLastCallValue;
-            },
-            set: function (value) {
-                Props.all.requestAnimFrameLastCallValue = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        return Props;
+        return Module;
     }());
-
-    var requestAnimationFrame = window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        (function (callback) {
-            var currTime = new Date().getTime();
-            var lastCall = Props.requestAnimFrameLastCall;
-            var timeToCall = Math.max(0, 16 - (currTime - lastCall));
-            var id = window.setTimeout(function () { return callback(currTime + timeToCall); }, timeToCall);
-            Props.requestAnimFrameLastCall = currTime + timeToCall;
-            return id;
-        });
-    var cancelAnimationFrame = window.cancelAnimationFrame ||
-        window.webkitCancelAnimationFrame ||
-        (function (id) { return window.clearTimeout(id); });
 
     var Events = /** @class */ (function () {
         function Events(scrollbar) {
@@ -111,7 +85,7 @@
             this.isScroling = false;
             this.isWheeling = null;
             this.watcher = null;
-            this.fps = 1000 / 16;
+            this.fps = 1000 / 24;
             this.scrollbar = scrollbar;
             this.scrollbar.el.onwheel = function (event) { return _this.mouseWheel(event); };
             this.scrollbar.scroll.onwheel = function (event) { return _this.mouseWheel(event); };
@@ -119,12 +93,12 @@
             this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(event); };
             document.onmouseup = function (event) { return _this.mouseUp(event); };
             this.lastWatched = Date.now();
-            this.watcher = requestAnimationFrame(function () { return _this.tick.call(_this); });
+            this.watcher = setTimeout(function () { return _this.tick.call(_this); }, this.fps);
         }
         Events.prototype.tick = function () {
             var _this = this;
-            cancelAnimationFrame(this.watcher);
-            this.watcher = requestAnimationFrame(function () { return _this.tick.call(_this); });
+            clearTimeout(this.watcher);
+            this.watcher = setTimeout(function () { return _this.tick.call(_this); }, this.fps);
             var elapsed = Date.now() - this.lastWatched;
             if (elapsed > this.fps) {
                 this.lastWatched = Date.now() - (elapsed % this.fps);
@@ -178,15 +152,17 @@
         return Events;
     }());
 
-    var Scrollbar = /** @class */ (function () {
+    var Scrollbar = /** @class */ (function (_super) {
+        __extends(Scrollbar, _super);
         function Scrollbar(el) {
-            this.maxPosition = 0;
-            this.position = 0;
-            this.scrollClass = null;
-            this.el = el;
-            this.el.classList.add('scroll-content');
-            this.createScroll();
-            this.calculateSizes();
+            var _this = _super.call(this, el) || this;
+            _this.maxPosition = 0;
+            _this.position = 0;
+            _this.scrollClass = null;
+            _this.el.classList.add('scroll-content');
+            _this.createScroll();
+            _this.calculateSizes();
+            return _this;
         }
         Scrollbar.prototype.calculateSizes = function () {
             this.el.style.overflow = 'auto';
@@ -243,22 +219,7 @@
             this.el.parentElement.insertBefore(this.scroll, this.el.nextSibling);
         };
         return Scrollbar;
-    }());
-
-    var Module = /** @class */ (function () {
-        function Module(el) {
-            if (el instanceof HTMLElement) {
-                this.el = el;
-            }
-            else {
-                this.el = document.querySelector(el);
-            }
-            if (this.el === null) {
-                throw new Error('Provided Element is null or cannot be found.');
-            }
-        }
-        return Module;
-    }());
+    }(Module));
 
     var Tooltip = /** @class */ (function (_super) {
         __extends(Tooltip, _super);

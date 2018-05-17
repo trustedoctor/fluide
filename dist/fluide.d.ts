@@ -14,25 +14,14 @@ declare module "modal/main" {
         closeable: boolean;
     }
 }
+declare module "module" {
+    export default abstract class Module {
+        el: HTMLElement;
+        constructor(el: HTMLElement | string);
+    }
+}
 declare module "helpers" {
     export function debounce(callback: () => void, time: number): () => void;
-}
-declare module "polyfills/props" {
-    export default class Props {
-        requestAnimFrameLastCallValue: number;
-        static readonly all: Props;
-        static requestAnimFrameLastCall: number;
-    }
-    global  {
-        interface Window {
-            _fluide: Props;
-        }
-    }
-}
-declare module "polyfills/animationFrame" {
-    const requestAnimationFrame: (callback: FrameRequestCallback) => number;
-    const cancelAnimationFrame: (id: number) => void;
-    export { cancelAnimationFrame, requestAnimationFrame };
 }
 declare module "scrollbar/events" {
     import Scrollbar from "scrollbar/main";
@@ -55,8 +44,8 @@ declare module "scrollbar/events" {
     }
 }
 declare module "scrollbar/main" {
-    export default class Scrollbar {
-        el: HTMLElement;
+    import Module from "module";
+    export default class Scrollbar extends Module {
         scroll: HTMLElement;
         bar: HTMLElement;
         scrollHeight: number;
@@ -73,12 +62,6 @@ declare module "scrollbar/main" {
         move(distance: number): void;
         setBarPosition(): void;
         private createScroll();
-    }
-}
-declare module "module" {
-    export default abstract class Module {
-        protected el: HTMLElement;
-        constructor(el: HTMLElement | string);
     }
 }
 declare module "tooltip/main" {
@@ -104,4 +87,23 @@ declare module "fluide" {
         version: string;
     };
     export default _default;
+}
+declare module "polyfills/props" {
+    export default class Props {
+        requestAnimFrameLastCallValue: number;
+        requestAnimFrameIdValue: number;
+        static readonly all: Props;
+        static requestAnimFrameLastCall: number;
+        static readonly requestAnimFrameId: number;
+    }
+    global  {
+        interface Window {
+            _fluide: Props;
+        }
+    }
+}
+declare module "polyfills/animationFrame" {
+    const requestAnimationFrame: (callback: FrameRequestCallback) => number;
+    const cancelAnimationFrame: (id: number) => void;
+    export { cancelAnimationFrame, requestAnimationFrame };
 }
