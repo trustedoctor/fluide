@@ -7,12 +7,10 @@ export default class Events {
 
   private isMac: RegExpMatchArray = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i)
 
-  private isScroling: boolean = false
   private isWheeling: NodeJS.Timer = null
 
   private watcher: NodeJS.Timer = null
   private fps: number = 1000 / 24
-  private lastWatched: number
 
   constructor(scrollbar: Scrollbar) {
     this.scrollbar = scrollbar
@@ -24,31 +22,23 @@ export default class Events {
 
     document.onmouseup = event => this.mouseUp(event)
 
-    this.lastWatched = Date.now()
     this.watcher = setTimeout(() => this.tick.call(this), this.fps);
   }
 
   private tick() {
-    clearTimeout(this.watcher);
     this.watcher = setTimeout(() => this.tick.call(this), this.fps);
 
-    const elapsed: number = Date.now() - this.lastWatched
-    if (elapsed > this.fps) {
-      this.lastWatched = Date.now() - (elapsed % this.fps)
+    if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
+      this.scrollbar.calculateSizes.call(this.scrollbar)
+    }
 
-      if (this.scrollbar.el.scrollHeight !== this.scrollbar.scrollHeight) {
-        this.scrollbar.calculateSizes.call(this.scrollbar)
-      }
-
-      if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
-        this.scrollbar.calculateSizes.call(this.scrollbar)
-      }
+    if (this.scrollbar.height !== this.scrollbar.el.clientHeight || this.scrollbar.width !== this.scrollbar.el.clientWidth) {
+      this.scrollbar.calculateSizes.call(this.scrollbar)
     }
   }
 
   private mouseDown(this: Events, event: MouseEvent) {
     event.preventDefault()
-    this.isScroling = true
     this.currentY = event.pageY
     document.onmousemove = e => this.mouseMove(e)
   }
@@ -65,28 +55,20 @@ export default class Events {
 
   private mouseWheel(this: Events, event: WheelEvent) {
     event.preventDefault()
-    this.isScroling = true;
 
     let distance = null
 
-    if (event.wheelDelta) {
-      distance = -((event.wheelDelta % 120 - 0) === -0 ? event.wheelDelta / 10 : event.wheelDelta);
+    if (event.wheelDelta && (event.wheelDelta % 120) === 0) {
+      distance = -(event.wheelDelta / 10);
     } else {
-      const rawAmmount = event.deltaY ? event.deltaY : event.detail;
-      distance = -(rawAmmount % 3 ? rawAmmount * 10 : rawAmmount / 3);
+      distance = event.deltaY
     }
 
     this.scrollbar.move(distance)
-
-    clearTimeout(this.isWheeling)
-    this.isWheeling = setTimeout(() => {
-      this.isScroling = false;
-    }, 250)
   }
 
   private mouseUp(this: Events, event: MouseEvent) {
     document.onmousemove = null
-    this.isScroling = false
   }
 
   private userScrolled(this: Events, event: UIEvent) {
