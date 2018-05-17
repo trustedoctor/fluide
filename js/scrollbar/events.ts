@@ -1,8 +1,6 @@
 import { debounce } from '../helpers'
 import Scrollbar from './main'
 
-import { cancelAnimationFrame, requestAnimationFrame } from '../polyfills/animationFrame'
-
 export default class Events {
   private scrollbar: Scrollbar
   private currentY: number
@@ -12,8 +10,8 @@ export default class Events {
   private isScroling: boolean = false
   private isWheeling: NodeJS.Timer = null
 
-  private watcher: number = null
-  private fps: number = 1000 / 16
+  private watcher: NodeJS.Timer = null
+  private fps: number = 1000 / 24
   private lastWatched: number
 
   constructor(scrollbar: Scrollbar) {
@@ -27,12 +25,12 @@ export default class Events {
     document.onmouseup = event => this.mouseUp(event)
 
     this.lastWatched = Date.now()
-    this.watcher = requestAnimationFrame(() => this.tick.call(this));
+    this.watcher = setTimeout(() => this.tick.call(this), this.fps);
   }
 
   private tick() {
-    cancelAnimationFrame(this.watcher);
-    this.watcher = requestAnimationFrame(() => this.tick.call(this));
+    clearTimeout(this.watcher);
+    this.watcher = setTimeout(() => this.tick.call(this), this.fps);
 
     const elapsed: number = Date.now() - this.lastWatched
     if (elapsed > this.fps) {

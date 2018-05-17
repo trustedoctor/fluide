@@ -1,5 +1,5 @@
 export default abstract class Module {
-  protected el: HTMLElement
+  public el: HTMLElement
 
   constructor(el: HTMLElement | string) {
     if (el instanceof HTMLElement) {

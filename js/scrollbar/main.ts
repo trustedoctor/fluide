@@ -1,8 +1,8 @@
+import Module from '../module'
 import Events from './events'
 
-export default class Scrollbar {
+export default class Scrollbar extends Module {
 
-  public el: HTMLElement
   public scroll: HTMLElement
   public bar: HTMLElement
 
@@ -22,7 +22,7 @@ export default class Scrollbar {
   private scrollClass: NodeJS.Timer = null
 
   constructor(el: HTMLElement) {
-    this.el = el
+    super(el)
 
     this.el.classList.add('scroll-content')
 
