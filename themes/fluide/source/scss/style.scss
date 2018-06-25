@@ -1,15 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&subset=latin-ext');
-@import url('https://file.myfontastic.com/QAGQqgNmKxCaYrC8P3BsjA/icons.css');
+@import url("https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900&subset=latin-ext");
+
+@import url("https://file.myfontastic.com/QAGQqgNmKxCaYrC8P3BsjA/icons.css");
 
 $base-font-family: "Lato" !default;
-@import '../../../../node_modules/fluide/scss/fluide.scss';
+
+@import "../../../../node_modules/fluide/scss/fluide.scss";
 
 $black: #222222;
 $primary: #41338C;
 $accent: #AD2383;
 
 body {
-  background: $primary;
+  background: $black;
   color: #fff;
 }
 
@@ -26,9 +28,30 @@ header {
   position: absolute;
   width: 100%;
   z-index: 2;
-  padding: 24px 0;
+  padding: 0 30px;
+
+  .logo {
+    display: block;
+    padding: 16px 0;
+
+    img {
+      height: 41px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px;
+    }
+
+    span {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.375rem;
+      font-weight: 300;
+      line-height: 41px;
+    }
+  }
 
   nav {
+    padding: 24px 0;
 
     a {
       display: inline-block;
@@ -39,7 +62,7 @@ header {
       img {
         display: block;
       }
-      
+
       &:nth-child(1n+2) {
         margin-left: 15px;
       }
@@ -52,17 +75,15 @@ header {
 }
 
 section {
-
   h1, h2, h3 {
     font-weight: 300;
   }
 
   .button {
     background: $black;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.50), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     border-radius: 2px;
     display: inline-block;
-
     font-weight: bold;
     font-size: .8125rem;
     padding: 10px 32px;
@@ -83,9 +104,11 @@ section {
     position: relative;
     padding-top: 120px;
     padding-bottom: 120px;
-    
+
     &.top {
       min-height: 90vh;
+      padding-top: 130px;
+      padding-bottom: 110px;
 
       &::before {
         content: '';
@@ -95,7 +118,7 @@ section {
         height: calc(100% + 200px);
         width: calc(100% + 140px);
         transform: rotate(-2.5deg);
-        background: $black;
+        background: $primary;
         z-index: 1;
       }
 
@@ -107,6 +130,7 @@ section {
       .logo {
         height: 35vh;
         text-align: center;
+        margin-bottom: 35px;
 
         img {
           height: 100%;
@@ -156,7 +180,6 @@ section {
     }
 
     &.why {
-
       h3 {
         margin-bottom: 25px;
       }
@@ -207,8 +230,210 @@ section {
       }
     }
   }
+
+  &.docs {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    min-height: 100vh;
+    margin-bottom: -98px;
+
+    aside {
+      background: $primary;
+      padding: 120px 30px 0;
+      width: 300px;
+      margin-left: -300px;
+      transition: margin .5s ease-in-out;
+      flex: none;
+
+      &.expanded {
+        margin-left: 0;
+      }
+
+      .sep {
+        font-size: 13px;
+        text-transform: uppercase;
+        margin: 30px 0 10px;
+        color: #AD2383;
+        font-weight: 800;
+      }
+
+      ul {
+        li {
+          margin-bottom: 5px;
+
+          a {
+            text-decoration: none;
+          }
+
+          &.current {
+            a {
+              text-decoration: underline;
+              font-weight: 600;
+            }
+          }
+        }
+
+        ul {
+          padding-left: 14px;
+
+          // margin-top: 5px;
+          margin-bottom: 15px;
+
+          li {
+            a {
+              font-size: rem(14px);
+            }
+          }
+        }
+      }
+    }
+
+    .wrapper {
+      padding-top: 120px;
+      padding-bottom: 120px;
+      flex-grow: 1;
+      width: 100%;
+
+      @include grid-container($global-width - 300px);
+
+      @include breakpoint(large) {}
+
+
+      table {
+        width: 100%;
+
+        thead {
+          tr {
+            background: rgba(0, 0, 0, 0.3);
+
+            th {
+              padding: 10px 13px;
+            }
+          }
+        }
+
+        tr {
+          background: rgba(0, 0, 0, 0.2);
+
+          &:nth-child(2n) {
+            background: rgba(0, 0, 0, 0.12);
+          }
+        }
+
+        td {
+          padding: 6px 13px;
+          vertical-align: middle;
+
+          code {
+            background: transparent;
+            padding: 0;
+            margin: 0;
+          }
+        }
+      }
+
+      .grid-example {
+        .cell {
+          .box {
+            background: $primary;
+            padding: 10px 12px;
+          }
+
+          &:nth-child(2n) .box {
+            background: darken($primary, 10%);
+          }
+        }
+      }
+
+      div.code {
+        border-radius: 6px;
+        overflow: hidden;
+        background: darken($black, 3.5%);
+        padding: 5px;
+
+        figure.highlight {
+          margin: 0;
+        }
+
+        .preview {
+          width: 100%;
+          padding: 30px 20px;
+          background: $black;
+          border-bottom-left-radius: 6px;
+          border-bottom-right-radius: 6px;
+
+          .row > .cell > div {
+            background: $primary;
+            padding: .75rem;
+          }
+        }
+      }
+
+      code {
+        background: #1b1b1b;
+        border-radius: 3px;
+        display: inline-block;
+        padding: 3px 9px;
+        font-family: 'Menlo';
+        font-size: .875rem;
+        font-weight: normal;
+      }
+
+      p {
+        code {
+          margin: 0 3px;
+        }
+      }
+
+      figure.highlight {
+        background: darken($black, 3.5%);
+        border-radius: 3px;
+        overflow-x: auto;
+        line-height: 1.1em;
+        position: relative;
+        padding: 15px 0;
+        font-size: .875rem;
+        line-height: 1.4rem;
+        margin: 10px 0 20px;
+
+        @import "./hightlight";
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          padding: 0;
+
+          tr {
+            background: transparent;
+          }
+        }
+
+        td.gutter {
+          width: 40px;
+          text-align: center;
+        }
+
+        pre {
+          font-family: 'Menlo';
+        }
+      }
+    }
+  }
 }
 
 footer {
-  padding: 60px 0 15px;
+  padding: 0 0 30px;
+
+  // background: #fff;
+  // color: $black;
+
+  // .powered {
+  //   height: 70px;
+  // }
+
+  .copy {
+    padding: 50px 0 0;
+  }
 }

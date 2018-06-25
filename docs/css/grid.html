@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Grid | fluide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DetailsGrid is based on Flexbox. Responsive   Breakpoint class Breakpoint minimal width     small-# &amp;gt; 0px   medium-# &amp;gt; 640px   large-# &amp;gt; 1024px   xlarge-# &amp;gt; 1200px    Basic usage1234&amp;lt;di">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Grid">
+<meta property="og:url" content="https://nerdslabs.github.io/fluide/docs/css/grid.html">
+<meta property="og:site_name" content="fluide">
+<meta property="og:description" content="DetailsGrid is based on Flexbox. Responsive   Breakpoint class Breakpoint minimal width     small-# &amp;gt; 0px   medium-# &amp;gt; 640px   large-# &amp;gt; 1024px   xlarge-# &amp;gt; 1200px    Basic usage1234&amp;lt;di">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-05-17T19:16:51.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grid">
+<meta name="twitter:description" content="DetailsGrid is based on Flexbox. Responsive   Breakpoint class Breakpoint minimal width     small-# &amp;gt; 0px   medium-# &amp;gt; 640px   large-# &amp;gt; 1024px   xlarge-# &amp;gt; 1200px    Basic usage1234&amp;lt;di">
+  
+    <link rel="alternate" href="/atom.xml" title="fluide" type="application/atom+xml">
+  
+  <link rel="shortcut icon" href="/images/favicon.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/scss/style.css">
+</head>
+<body>
+  <header>
+   <!-- url_for() -->
+  <div class="container full">
+    <div class="row">
+      <div class="small-12 large-6 cell">
+        <a class="logo" href="/"><img src="/images/logo.svg"><span>fluide</span></a>
+      </div>
+      <div class="small-12 large-6 cell text-right">
+        <nav>
+          <a class="nav-icon"></a>
+          
+            <a class="main-nav-link" href="/">Home</a>
+          
+            <a class="main-nav-link" href="/docs">Docs</a>
+          
+          <a href="https://github.com/nerdslabs/fluide" class="stars" target="_blank"><img src="https://img.shields.io/github/stars/nerdslabs/fluide.svg?style=social&label=Stars"></a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+  <main><section class="docs">
+  <aside class="expanded">
+    <div class="current"></div>
+    <ul>
+      
+        <li class=""><a href="/docs/index.html">Getting started</a></li>
+      
+    </ul>
+    <div class="sep">CSS</div>
+    <ul>
+      <li>
+        
+          <li class=""><a href="/docs/css/container.html">Container</a></li>
+          
+        
+          <li class=""><a href="/docs/css/arrangement.html">Arrangement</a></li>
+          
+        
+          <li class="current"><a href="/docs/css/grid.html">Grid</a></li>
+          
+          <ul>
+            
+            <li><a href="/docs/css/grid.html#Details">Details</a></li>
+            
+            <li><a href="/docs/css/grid.html#Responsive">Responsive</a></li>
+            
+            <li><a href="/docs/css/grid.html#Basic-usage">Basic usage</a></li>
+            
+            <li><a href="/docs/css/grid.html#Margins-between-cells">Margins between cells</a></li>
+            
+            <li><a href="/docs/css/grid.html#SCSS-variables">SCSS variables</a></li>
+            
+          </ul>
+          
+        
+      </li>
+    </ul>
+  </aside>
+  <div class="wrapper">
+    <div class="article-meta">
+      <h1>Grid</h1>
+    </div>
+    <div class="article-inner">
+      <div class="article-entry" itemprop="articleBody">
+        
+          <h3 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h3><p>Grid is based on <strong>Flexbox</strong>.</p>
+<h3 id="Responsive"><a href="#Responsive" class="headerlink" title="Responsive"></a>Responsive</h3><table>
+<thead>
+<tr>
+<th>Breakpoint class</th>
+<th>Breakpoint minimal width</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>small-#</code></td>
+<td><code>&gt; 0px</code></td>
+</tr>
+<tr>
+<td><code>medium-#</code></td>
+<td><code>&gt; 640px</code></td>
+</tr>
+<tr>
+<td><code>large-#</code></td>
+<td><code>&gt; 1024px</code></td>
+</tr>
+<tr>
+<td><code>xlarge-#</code></td>
+<td><code>&gt; 1200px</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="Basic-usage"><a href="#Basic-usage" class="headerlink" title="Basic usage"></a>Basic usage</h3><div class="code html"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"small-12 large-6 cell"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>small-12 large-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"small-12 large-6 cell"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>small-12 large-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><div class="preview"><div class="row">
+  <div class="small-12 large-6 cell"><div>small-12 large-6</div></div>
+  <div class="small-12 large-6 cell"><div>small-12 large-6</div></div>
+</div></div></div>
+<h3 id="Margins-between-cells"><a href="#Margins-between-cells" class="headerlink" title="Margins between cells"></a>Margins between cells</h3><div class="code html"><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row row-margin"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"small-12 large-6 cell"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>small-12 large-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"small-12 large-6 cell"</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>small-12 large-6<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure><div class="preview"><div class="row row-margin">
+  <div class="small-12 large-6 cell"><div>small-12 large-6</div></div>
+  <div class="small-12 large-6 cell"><div>small-12 large-6</div></div>
+</div></div></div>
+<h3 id="SCSS-variables"><a href="#SCSS-variables" class="headerlink" title="SCSS variables"></a>SCSS variables</h3><table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$grid-columns</code></td>
+<td><code>12</code></td>
+</tr>
+<tr>
+<td><code>$grid-column-gutter</code></td>
+<td><code>10px</code></td>
+</tr>
+<tr>
+<td><code>$grid-breakpoints</code></td>
+<td><code>( small: 0, medium: 640px, large: 1024px, xlarge: 1200px, xxlarge: 1440px, )</code></td>
+</tr>
+<tr>
+<td><code>$grid-breakpoints-classes</code></td>
+<td><code>( medium, large, xlarge, )</code></td>
+</tr>
+</tbody>
+</table>
+
+        
+      </div>
+    </div>
+  </div>
+</section></main>
+  
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="small-12 large-6 cell">
+        </div>
+        <div class="small-12 large-6 cell text-center large-text-right">
+          <div class="copy">&copy; 2018 nerdslabs<br></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

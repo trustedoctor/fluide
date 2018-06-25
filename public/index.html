@@ -15,30 +15,29 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fluide">
   
-    <link rel="alternate" href="/fluide/atom.xml" title="fluide" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="fluide" type="application/atom+xml">
   
-  
-    <link rel="icon" href="/favicon.png">
-  
+  <link rel="shortcut icon" href="/images/favicon.png">
   
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
-  <link rel="stylesheet" href="/fluide/scss/style.css">
+  <link rel="stylesheet" href="/scss/style.css">
 </head>
-
 <body>
   <header>
    <!-- url_for() -->
-  <div class="container">
+  <div class="container full">
     <div class="row">
-      <div class="small-12 large-6 cell"></div>
+      <div class="small-12 large-6 cell">
+        <a class="logo" href="/"><img src="/images/logo.svg"><span>fluide</span></a>
+      </div>
       <div class="small-12 large-6 cell text-right">
         <nav>
           <a class="nav-icon"></a>
           
-            <a class="main-nav-link" href="/fluide/">Home</a>
+            <a class="main-nav-link" href="/">Home</a>
           
-            <a class="main-nav-link" href="/fluide/docs">Docs</a>
+            <a class="main-nav-link" href="/docs">Docs</a>
           
           <a href="https://github.com/nerdslabs/fluide" class="stars" target="_blank"><img src="https://img.shields.io/github/stars/nerdslabs/fluide.svg?style=social&label=Stars"></a>
         </nav>
@@ -48,12 +47,14 @@
 </header>
   <main><section class="home top">
   <div class="container">
-    <div class="logo"></div>
+    <div class="logo">
+      <img src="/images/logo.svg">
+    </div>
     <div class="info">
       <h1>fluide</h1>
       <h2>Simple, fluid and lightway CSS and JS framework.</h2>
       <ul class="features">
-        <li><i class="ic-lightning"></i><span>2.8kb</span></li>
+        <li><i class="ic-lightning"></i><span class="replace-size">3.67kb (gzip)</span></li>
         <li><i class="ic-module"></i><span>modular</span></li>
       </ul>
     </div>
@@ -64,10 +65,10 @@
     <div class="row">
       <div class="small-12 large-8 cell">
         <h3>Why next framework?</h3>
-        <p>Yes, I know, next front-end framework 😊 but reason is simple, I working in front-end development from few years, and after this years I can say, all popular frameworks have too many features. That's why I started thinking, what can I do, and result was: </p>
+        <p>Yes, I know, next front-end framework 😊 but reason is simple, I have been working in frontend development for a few years, and after this years I can say, all popular frameworks have too many features. That's why I started thinking, what can I do, and result was: </p>
         <p><strong>"Make simple, fluid and lightway framework"</strong></p>
-        <p>Next</p>
-        <div class="buttons"><a href="" class="button primary">Download</a><a href="" class="button">Documentation</a></div>
+        <p></p>
+        <div class="buttons"><a href="https://github.com/nerdslabs/fluide/releases" class="button primary">Download</a><a href="/docs" class="button">Documentation</a></div>
       </div>
       <div class="small-12 large-4 cell"></div>
     </div>
@@ -78,13 +79,13 @@
     <h3>Crafted with new solutions</h3>
     <div class="row">
       <div class="small-12 large-8 large-offset-2 cell">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida mi non sapien suscipit, eget ornare lorem pellentesque. Vivamus justo nulla, aliquet id enim eget, fermentum iaculis eros.</p>
+        <p></p>
       </div>
     </div>
     <div class="row items">
       <div class="small-12 large-4 cell"><i class="ic-grid"></i><span>Flexbox Grid</span></div>
       <div class="small-12 large-4 cell"><i class="ic-sass"></i><span>SCSS Base</span></div>
-      <div class="small-12 large-4 cell"><i class="ic-js"></i><span>ES6 Core</span></div>
+      <div class="small-12 large-4 cell"><i class="ic-ts"></i><span>TypeScript</span></div>
     </div>
   </div>
 </section></main>
@@ -92,9 +93,10 @@
   <footer>
     <div class="container">
       <div class="row">
-        <div class="small-12 large-6 cell"></div>
+        <div class="small-12 large-6 cell">
+        </div>
         <div class="small-12 large-6 cell text-center large-text-right">
-          &copy; 2018 nerdslabs<br>
+          <div class="copy">&copy; 2018 nerdslabs<br></div>
         </div>
       </div>
     </div>

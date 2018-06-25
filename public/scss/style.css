@@ -497,8 +497,70 @@ h1 {
   .xlarge-order-12 {
     order: 12; } }
 
+.scroll-content {
+  display: inline-block;
+  width: 100%; }
+
+.scroll-content + .scroll-bar {
+  display: inline-block;
+  width: 12px;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0, 1, 1, 1); }
+
+.scroll-content + .scroll-bar:hover, .scroll-content + .scroll-bar.scroll-active {
+  opacity: 1; }
+
+.scroll-content + .scroll-bar > .bar {
+  width: 10px;
+  margin: 0 1px;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: .8;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: background .3s ease-in-out; }
+  .scroll-content + .scroll-bar > .bar:hover {
+    opacity: 1; }
+  .scroll-content + .scroll-bar > .bar:active {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.5); }
+
+.modal {
+  position: fixed;
+  display: none;
+  width: 800px;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin: 1.75rem auto;
+  background: #fff;
+  color: initial;
+  text-align: left;
+  z-index: 2; }
+
+.modal + .modal-backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1; }
+
+.tooltip {
+  position: absolute;
+  background: #232F34;
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 3px 8px; }
+
 body {
-  background: #41338C;
+  background: #222222;
   color: #fff; }
 
 a {
@@ -512,18 +574,34 @@ header {
   position: absolute;
   width: 100%;
   z-index: 2;
-  padding: 24px 0; }
-  header nav a {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 15px;
-    text-decoration: none; }
-    header nav a img {
-      display: block; }
-    header nav a:nth-child(1n+2) {
-      margin-left: 15px; }
-    header nav a.stars {
-      margin-left: 35px; }
+  padding: 0 30px; }
+  header .logo {
+    display: block;
+    padding: 16px 0; }
+    header .logo img {
+      height: 41px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 15px; }
+    header .logo span {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 1.375rem;
+      font-weight: 300;
+      line-height: 41px; }
+  header nav {
+    padding: 24px 0; }
+    header nav a {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 15px;
+      text-decoration: none; }
+      header nav a img {
+        display: block; }
+      header nav a:nth-child(1n+2) {
+        margin-left: 15px; }
+      header nav a.stars {
+        margin-left: 35px; }
 
 section h1, section h2, section h3 {
   font-weight: 300; }
@@ -550,7 +628,9 @@ section.home {
   padding-top: 120px;
   padding-bottom: 120px; }
   section.home.top {
-    min-height: 90vh; }
+    min-height: 90vh;
+    padding-top: 130px;
+    padding-bottom: 110px; }
     section.home.top::before {
       content: '';
       position: absolute;
@@ -559,14 +639,15 @@ section.home {
       height: calc(100% + 200px);
       width: calc(100% + 140px);
       transform: rotate(-2.5deg);
-      background: #222222;
+      background: #41338C;
       z-index: 1; }
     section.home.top .container {
       position: relative;
       z-index: 2; }
     section.home.top .logo {
       height: 35vh;
-      text-align: center; }
+      text-align: center;
+      margin-bottom: 35px; }
       section.home.top .logo img {
         height: 100%; }
     section.home.top .info {
@@ -626,5 +707,137 @@ section.home {
         font-weight: 300;
         font-size: 1.375rem; }
 
+section.docs {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
+  min-height: 100vh;
+  margin-bottom: -98px; }
+  section.docs aside {
+    background: #41338C;
+    padding: 120px 30px 0;
+    width: 300px;
+    margin-left: -300px;
+    transition: margin .5s ease-in-out;
+    flex: none; }
+    section.docs aside.expanded {
+      margin-left: 0; }
+    section.docs aside .sep {
+      font-size: 13px;
+      text-transform: uppercase;
+      margin: 30px 0 10px;
+      color: #AD2383;
+      font-weight: 800; }
+    section.docs aside ul li {
+      margin-bottom: 5px; }
+      section.docs aside ul li a {
+        text-decoration: none; }
+      section.docs aside ul li.current a {
+        text-decoration: underline;
+        font-weight: 600; }
+    section.docs aside ul ul {
+      padding-left: 14px;
+      margin-bottom: 15px; }
+      section.docs aside ul ul li a {
+        font-size: 0.875rem; }
+  section.docs .wrapper {
+    padding-top: 120px;
+    padding-bottom: 120px;
+    flex-grow: 1;
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px; }
+    section.docs .wrapper table {
+      width: 100%; }
+      section.docs .wrapper table thead tr {
+        background: rgba(0, 0, 0, 0.3); }
+        section.docs .wrapper table thead tr th {
+          padding: 10px 13px; }
+      section.docs .wrapper table tr {
+        background: rgba(0, 0, 0, 0.2); }
+        section.docs .wrapper table tr:nth-child(2n) {
+          background: rgba(0, 0, 0, 0.12); }
+      section.docs .wrapper table td {
+        padding: 6px 13px;
+        vertical-align: middle; }
+        section.docs .wrapper table td code {
+          background: transparent;
+          padding: 0;
+          margin: 0; }
+    section.docs .wrapper .grid-example .cell .box {
+      background: #41338C;
+      padding: 10px 12px; }
+    section.docs .wrapper .grid-example .cell:nth-child(2n) .box {
+      background: #302567; }
+    section.docs .wrapper div.code {
+      border-radius: 6px;
+      overflow: hidden;
+      background: #191919;
+      padding: 5px; }
+      section.docs .wrapper div.code figure.highlight {
+        margin: 0; }
+      section.docs .wrapper div.code .preview {
+        width: 100%;
+        padding: 30px 20px;
+        background: #222222;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px; }
+        section.docs .wrapper div.code .preview .row > .cell > div {
+          background: #41338C;
+          padding: .75rem; }
+    section.docs .wrapper code {
+      background: #1b1b1b;
+      border-radius: 3px;
+      display: inline-block;
+      padding: 3px 9px;
+      font-family: 'Menlo';
+      font-size: .875rem;
+      font-weight: normal; }
+    section.docs .wrapper p code {
+      margin: 0 3px; }
+    section.docs .wrapper figure.highlight {
+      background: #191919;
+      border-radius: 3px;
+      overflow-x: auto;
+      line-height: 1.1em;
+      position: relative;
+      padding: 15px 0;
+      font-size: .875rem;
+      line-height: 1.4rem;
+      margin: 10px 0 20px; }
+      section.docs .wrapper figure.highlight .comment, section.docs .wrapper figure.highlight .quote {
+        color: #9c9491; }
+      section.docs .wrapper figure.highlight .variable, section.docs .wrapper figure.highlight .template-variable, section.docs .wrapper figure.highlight .attribute, section.docs .wrapper figure.highlight .name, section.docs .wrapper figure.highlight .regexp, section.docs .wrapper figure.highlight .link, section.docs .wrapper figure.highlight .name, section.docs .wrapper figure.highlight .selector-id, section.docs .wrapper figure.highlight .selector-class {
+        color: #AD2383; }
+      section.docs .wrapper figure.highlight .number, section.docs .wrapper figure.highlight .meta, section.docs .wrapper figure.highlight .built_in, section.docs .wrapper figure.highlight .builtin-name, section.docs .wrapper figure.highlight .literal, section.docs .wrapper figure.highlight .type, section.docs .wrapper figure.highlight .params, section.docs .wrapper figure.highlight .tag {
+        color: #fff; }
+      section.docs .wrapper figure.highlight .string, section.docs .wrapper figure.highlight .symbol, section.docs .wrapper figure.highlight .bullet {
+        color: #9e73cc; }
+      section.docs .wrapper figure.highlight .title, section.docs .wrapper figure.highlight .section {
+        color: #407ee7; }
+      section.docs .wrapper figure.highlight .keyword, section.docs .wrapper figure.highlight .selector-tag {
+        color: #6666ea; }
+      section.docs .wrapper figure.highlight .emphasis {
+        font-style: italic; }
+      section.docs .wrapper figure.highlight .strong {
+        font-weight: bold; }
+      section.docs .wrapper figure.highlight table {
+        width: 100%;
+        border-collapse: collapse;
+        padding: 0; }
+        section.docs .wrapper figure.highlight table tr {
+          background: transparent; }
+      section.docs .wrapper figure.highlight td.gutter {
+        width: 40px;
+        text-align: center; }
+      section.docs .wrapper figure.highlight pre {
+        font-family: 'Menlo'; }
+
 footer {
-  padding: 60px 0 15px; }
+  padding: 0 0 30px; }
+  footer .copy {
+    padding: 50px 0 0; }

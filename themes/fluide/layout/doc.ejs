@@ -1,0 +1,44 @@
+<section class="docs">
+  <aside class="expanded">
+    <div class="current"></div>
+    <ul>
+      <% site.pages.find({layout: 'doc', type: 'general'}).sort('order').each(function(page) { %>
+        <li class="<%= is_current(page.path, {'strict': true}) ? 'current' : '' %>"><a href="<%- url_for(page.path) %>"><%= page.title %></a></li>
+      <% }); %>
+    </ul>
+    <div class="sep">CSS</div>
+    <ul>
+      <li>
+        <% site.pages.find({layout: 'doc', type: 'css'}).sort('order').each(function(page) { %>
+          <li class="<%= is_current(page.path, {'strict': true}) ? 'current' : '' %>"><a href="<%- url_for(page.path) %>"><%= page.title %></a></li>
+          <% if(typeof page.submenu != typeof undefined && is_current(page.path, {'strict': true})) { %>
+          <ul>
+            <% _.forEach(page.submenu, function(hash, title) { %>
+            <li><a href="<%- url_for(page.path) %>#<%= hash %>"><%= title %></a></li>
+            <% }); %>
+          </ul>
+          <% } %>
+        <% }); %>
+      </li>
+    </ul>
+  </aside>
+  <div class="wrapper">
+    <div class="article-meta">
+      <h1><%= page.title %></h1>
+    </div>
+    <div class="article-inner">
+      <div class="article-entry" itemprop="articleBody">
+        <% if (page.excerpt && index){ %>
+          <%- page.excerpt %>
+          <% if (theme.excerpt_link){ %>
+            <p class="article-more-link">
+              <a href="<%- url_for(page.path) %>#more"><%= theme.excerpt_link %></a>
+            </p>
+          <% } %>
+        <% } else { %>
+          <%- page.content %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
