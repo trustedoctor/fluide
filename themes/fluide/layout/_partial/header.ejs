@@ -1,5 +1,4 @@
 <header>
-   <!-- url_for() -->
   <div class="container full">
     <div class="row">
       <div class="small-12 large-6 cell">
@@ -12,6 +11,7 @@
             <a class="main-nav-link" href="<%- url_for(theme.menu[i]) %>"><%= i %></a>
           <% } %>
           <a href="https://github.com/nerdslabs/fluide" class="stars" target="_blank"><img src="https://img.shields.io/github/stars/nerdslabs/fluide.svg?style=social&label=Stars"></a>
+          <div class="search-algolia"><input type="text" placeholder="Search..."></div>
         </nav>
       </div>
     </div>

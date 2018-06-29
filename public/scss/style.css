@@ -560,11 +560,19 @@ h1 {
   padding: 3px 8px; }
 
 body {
-  background: #222222;
-  color: #fff; }
+  background: #fcfcfc;
+  color: #222222; }
+  body.body-front-page header {
+    color: #fff; }
+    body.body-front-page header a {
+      color: #fff; }
+    body.body-front-page header .search-algolia input {
+      color: #fff; }
+      body.body-front-page header .search-algolia input::placeholder {
+        color: #fff; }
 
 a {
-  color: #fff; }
+  color: #222222; }
 
 main {
   position: relative;
@@ -574,9 +582,23 @@ header {
   position: absolute;
   width: 100%;
   z-index: 2;
-  padding: 0 30px; }
+  padding: 0 30px;
+  background: transparent;
+  position: fixed;
+  color: #222222;
+  transition: all .2s ease-in-out; }
+  header.scrolled {
+    background: #41338C;
+    color: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); }
+    header.scrolled a {
+      color: #fff; }
+    header.scrolled .search-algolia input {
+      color: #fff; }
+      header.scrolled .search-algolia input::placeholder {
+        color: #fff; }
   header .logo {
-    display: block;
+    display: inline-block;
     padding: 16px 0; }
     header .logo img {
       height: 41px;
@@ -601,13 +623,31 @@ header {
       header nav a:nth-child(1n+2) {
         margin-left: 15px; }
       header nav a.stars {
-        margin-left: 35px; }
+        margin-left: 25px; }
+    header nav .search-algolia {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 25px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 4px; }
+      header nav .search-algolia input {
+        font-family: "Lato";
+        font-size: 15px;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        height: 35px;
+        padding: 0 15px; }
+        header nav .search-algolia input::placeholder {
+          color: #222222;
+          opacity: 1; }
 
 section h1, section h2, section h3 {
   font-weight: 300; }
 
 section .button {
   background: #222222;
+  color: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
   display: inline-block;
@@ -630,7 +670,8 @@ section.home {
   section.home.top {
     min-height: 90vh;
     padding-top: 130px;
-    padding-bottom: 110px; }
+    padding-bottom: 110px;
+    color: #fff; }
     section.home.top::before {
       content: '';
       position: absolute;
@@ -680,7 +721,8 @@ section.home {
   section.home.why .buttons {
     margin-top: 80px; }
   section.home.crafted {
-    text-align: center; }
+    text-align: center;
+    color: #fff; }
     section.home.crafted::before {
       content: '';
       position: absolute;
@@ -697,12 +739,19 @@ section.home {
     section.home.crafted h3 {
       margin-top: 0; }
     section.home.crafted .items {
-      margin-top: 75px; }
+      margin-top: 15px; }
+      @media (min-width: 1024px) {
+        section.home.crafted .items {
+          margin-top: 75px; } }
       section.home.crafted .items i {
         font-size: 51px;
         line-height: 51px;
         display: block;
-        margin-bottom: 16px; }
+        margin-bottom: 16px;
+        margin-top: 30px; }
+        @media (min-width: 1024px) {
+          section.home.crafted .items i {
+            margin-top: 0; } }
       section.home.crafted .items span {
         font-weight: 300;
         font-size: 1.375rem; }
@@ -715,7 +764,7 @@ section.docs {
   min-height: 100vh;
   margin-bottom: -98px; }
   section.docs aside {
-    background: #41338C;
+    background: #f7f7f7;
     padding: 120px 30px 0;
     width: 300px;
     margin-left: -300px;
@@ -751,16 +800,23 @@ section.docs {
     margin-right: auto;
     padding-left: 10px;
     padding-right: 10px; }
+    section.docs .wrapper h3:before {
+      content: '';
+      display: block;
+      position: relative;
+      width: 0;
+      height: 100px;
+      margin-top: -100px; }
     section.docs .wrapper table {
       width: 100%; }
       section.docs .wrapper table thead tr {
-        background: rgba(0, 0, 0, 0.3); }
+        background: #ededed; }
         section.docs .wrapper table thead tr th {
           padding: 10px 13px; }
       section.docs .wrapper table tr {
-        background: rgba(0, 0, 0, 0.2); }
+        background: whitesmoke; }
         section.docs .wrapper table tr:nth-child(2n) {
-          background: rgba(0, 0, 0, 0.12); }
+          background: #f2f2f2; }
       section.docs .wrapper table td {
         padding: 6px 13px;
         vertical-align: middle; }
@@ -776,21 +832,22 @@ section.docs {
     section.docs .wrapper div.code {
       border-radius: 6px;
       overflow: hidden;
-      background: #191919;
+      background: #f2f2f2;
       padding: 5px; }
       section.docs .wrapper div.code figure.highlight {
         margin: 0; }
       section.docs .wrapper div.code .preview {
         width: 100%;
         padding: 30px 20px;
-        background: #222222;
+        background: #fcfcfc;
         border-bottom-left-radius: 6px;
         border-bottom-right-radius: 6px; }
         section.docs .wrapper div.code .preview .row > .cell > div {
           background: #41338C;
-          padding: .75rem; }
+          padding: .75rem;
+          color: #fff; }
     section.docs .wrapper code {
-      background: #1b1b1b;
+      background: #f2f2f2;
       border-radius: 3px;
       display: inline-block;
       padding: 3px 9px;
@@ -800,7 +857,7 @@ section.docs {
     section.docs .wrapper p code {
       margin: 0 3px; }
     section.docs .wrapper figure.highlight {
-      background: #191919;
+      background: #f2f2f2;
       border-radius: 3px;
       overflow-x: auto;
       line-height: 1.1em;
@@ -814,7 +871,7 @@ section.docs {
       section.docs .wrapper figure.highlight .variable, section.docs .wrapper figure.highlight .template-variable, section.docs .wrapper figure.highlight .attribute, section.docs .wrapper figure.highlight .name, section.docs .wrapper figure.highlight .regexp, section.docs .wrapper figure.highlight .link, section.docs .wrapper figure.highlight .name, section.docs .wrapper figure.highlight .selector-id, section.docs .wrapper figure.highlight .selector-class {
         color: #AD2383; }
       section.docs .wrapper figure.highlight .number, section.docs .wrapper figure.highlight .meta, section.docs .wrapper figure.highlight .built_in, section.docs .wrapper figure.highlight .builtin-name, section.docs .wrapper figure.highlight .literal, section.docs .wrapper figure.highlight .type, section.docs .wrapper figure.highlight .params, section.docs .wrapper figure.highlight .tag {
-        color: #fff; }
+        color: #222222; }
       section.docs .wrapper figure.highlight .string, section.docs .wrapper figure.highlight .symbol, section.docs .wrapper figure.highlight .bullet {
         color: #9e73cc; }
       section.docs .wrapper figure.highlight .title, section.docs .wrapper figure.highlight .section {
@@ -834,10 +891,19 @@ section.docs {
       section.docs .wrapper figure.highlight td.gutter {
         width: 40px;
         text-align: center; }
+      section.docs .wrapper figure.highlight td.code > div {
+        overflow-x: auto; }
       section.docs .wrapper figure.highlight pre {
         font-family: 'Menlo'; }
 
 footer {
-  padding: 0 0 30px; }
+  padding: 0 30px 20px;
+  position: relative;
+  z-index: 3; }
+  footer .crafted {
+    display: inline-block;
+    margin-top: 15px; }
+    footer .crafted img {
+      height: 55px; }
   footer .copy {
     padding: 50px 0 0; }

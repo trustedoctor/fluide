@@ -1,10 +1,9 @@
 {
-  "name": "hexo-site",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "server": "hexo server",
-    "deploy": "node prepare.js && hexo generate && hexo deploy"
+    "generate": "hexo clean && hexo generate",
+    "deploy": "node prepare.js && hexo clean && hexo generate && hexo deploy && rm -rf .deploy_git"
   },
   "hexo": {
     "version": "3.7.1"

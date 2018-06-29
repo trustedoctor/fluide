@@ -11,12 +11,30 @@ $primary: #41338C;
 $accent: #AD2383;
 
 body {
-  background: $black;
-  color: #fff;
+  background: #fcfcfc;
+  color: $black;
+
+  &.body-front-page {
+    header {
+      color: #fff;
+
+      a {
+        color: #fff;
+      }
+
+      .search-algolia input {
+        color: #fff;
+
+        &::placeholder {
+          color: #fff;
+        }
+      }
+    }
+  }
 }
 
 a {
-  color: #fff;
+  color: $black;
 }
 
 main {
@@ -29,9 +47,31 @@ header {
   width: 100%;
   z-index: 2;
   padding: 0 30px;
+  background: transparent;
+  position: fixed;
+  color: $black;
+  transition: all .2s ease-in-out;
+
+  &.scrolled {
+    background: $primary;
+    color: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+
+    a {
+      color: #fff;
+    }
+
+    .search-algolia input {
+      color: #fff;
+
+      &::placeholder {
+        color: #fff;
+      }
+    }
+  }
 
   .logo {
-    display: block;
+    display: inline-block;
     padding: 16px 0;
 
     img {
@@ -68,7 +108,30 @@ header {
       }
 
       &.stars {
-        margin-left: 35px;
+        margin-left: 25px;
+      }
+    }
+
+    .search-algolia {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 25px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+
+      input {
+        font-family: $base-font-family;
+        font-size: 15px;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        height: 35px;
+        padding: 0 15px;
+
+        &::placeholder {
+          color: $black;
+          opacity: 1;
+        }
       }
     }
   }
@@ -81,6 +144,7 @@ section {
 
   .button {
     background: $black;
+    color: #fff;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     border-radius: 2px;
     display: inline-block;
@@ -109,6 +173,7 @@ section {
       min-height: 90vh;
       padding-top: 130px;
       padding-bottom: 110px;
+      color: #fff;
 
       &::before {
         content: '';
@@ -191,6 +256,7 @@ section {
 
     &.crafted {
       text-align: center;
+      color: #fff;
 
       &::before {
         content: '';
@@ -214,13 +280,23 @@ section {
       }
 
       .items {
-        margin-top: 75px;
+        margin-top: 15px;
+
+        @include breakpoint(large) {
+          margin-top: 75px;
+        }
+
 
         i {
           font-size: 51px;
           line-height: 51px;
           display: block;
           margin-bottom: 16px;
+          margin-top: 30px;
+
+          @include breakpoint(large) {
+            margin-top: 0;
+          }
         }
 
         span {
@@ -240,7 +316,7 @@ section {
     margin-bottom: -98px;
 
     aside {
-      background: $primary;
+      background: darken(#fff, 3%);
       padding: 120px 30px 0;
       width: 300px;
       margin-left: -300px;
@@ -300,13 +376,21 @@ section {
 
       @include breakpoint(large) {}
 
+      h3:before {
+        content: '';
+        display: block;
+        position: relative;
+        width: 0;
+        height: 100px;
+        margin-top: -100px;
+      }
 
       table {
         width: 100%;
 
         thead {
           tr {
-            background: rgba(0, 0, 0, 0.3);
+            background: darken(#fff, 7%);
 
             th {
               padding: 10px 13px;
@@ -315,10 +399,10 @@ section {
         }
 
         tr {
-          background: rgba(0, 0, 0, 0.2);
+          background: darken(#fff, 4%);
 
           &:nth-child(2n) {
-            background: rgba(0, 0, 0, 0.12);
+            background: darken(#fff, 5%);
           }
         }
 
@@ -350,7 +434,7 @@ section {
       div.code {
         border-radius: 6px;
         overflow: hidden;
-        background: darken($black, 3.5%);
+        background: darken(#fff, 5%);
         padding: 5px;
 
         figure.highlight {
@@ -360,19 +444,20 @@ section {
         .preview {
           width: 100%;
           padding: 30px 20px;
-          background: $black;
+          background: #fcfcfc;
           border-bottom-left-radius: 6px;
           border-bottom-right-radius: 6px;
 
           .row > .cell > div {
             background: $primary;
             padding: .75rem;
+            color: #fff;
           }
         }
       }
 
       code {
-        background: #1b1b1b;
+        background: darken(#fff, 5%);
         border-radius: 3px;
         display: inline-block;
         padding: 3px 9px;
@@ -388,7 +473,7 @@ section {
       }
 
       figure.highlight {
-        background: darken($black, 3.5%);
+        background: darken(#fff, 5%);
         border-radius: 3px;
         overflow-x: auto;
         line-height: 1.1em;
@@ -398,7 +483,37 @@ section {
         line-height: 1.4rem;
         margin: 10px 0 20px;
 
-        @import "./hightlight";
+        .comment, .quote {
+          color: #9c9491;
+        }
+
+        .variable, .template-variable, .attribute, .name, .regexp, .link, .name, .selector-id, .selector-class {
+          color: $accent;
+        }
+
+        .number, .meta, .built_in, .builtin-name, .literal, .type, .params, .tag {
+          color: $black;
+        }
+
+        .string, .symbol, .bullet {
+          color: lighten(adjust-hue($primary, 20%), 25%);
+        }
+
+        .title, .section {
+          color: #407ee7;
+        }
+
+        .keyword, .selector-tag {
+          color: #6666ea;
+        }
+
+        .emphasis {
+          font-style: italic;
+        }
+
+        .strong {
+          font-weight: bold;
+        }
 
         table {
           width: 100%;
@@ -415,6 +530,10 @@ section {
           text-align: center;
         }
 
+        td.code > div {
+          overflow-x: auto;
+        }
+
         pre {
           font-family: 'Menlo';
         }
@@ -424,14 +543,21 @@ section {
 }
 
 footer {
-  padding: 0 0 30px;
+  padding: 0 30px 20px;
+  position: relative;
+  z-index: 3;
 
   // background: #fff;
   // color: $black;
 
-  // .powered {
-  //   height: 70px;
-  // }
+  .crafted {
+    display: inline-block;
+    margin-top: 15px;
+
+    img {
+      height: 55px;
+    }
+  }
 
   .copy {
     padding: 50px 0 0;
