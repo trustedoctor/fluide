@@ -15,32 +15,79 @@
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    var Modal = /** @class */ (function () {
-        function Modal(el, options) {
-            if (options === void 0) { options = {
-                closeable: true,
-            }; }
-            this.isOpened = false;
+    var Props = /** @class */ (function () {
+        function Props() {
+            var _this = this;
+            this.tickTimout = null;
+            this.tickInstances = [];
+            this.fps = 1000 / 24;
+            this.tickTimout = setTimeout(function () { return _this.tick(); }, this.fps);
+        }
+        Props.prototype.addTickInstance = function (c) {
+            this.tickInstances.push(c);
+        };
+        Props.prototype.tick = function () {
+            var _this = this;
+            this.tickInstances.forEach(function (instance) { return instance.onTick(); });
+            this.tickTimout = setTimeout(function () { return _this.tick(); }, this.fps);
+        };
+        Object.defineProperty(Props, "all", {
+            get: function () {
+                if (typeof window._fluide === typeof undefined) {
+                    window._fluide = new Props();
+                }
+                return window._fluide;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return Props;
+    }());
+
+    var Module = /** @class */ (function () {
+        function Module(el) {
             if (el instanceof HTMLElement) {
                 this.el = el;
             }
             else {
                 this.el = document.querySelector(el);
             }
-            this.options = options;
-            this.backdrop = document.createElement('div');
-            this.backdrop.className = 'modal-backdrop';
+            if (this.el === null) {
+                throw new Error('Provided Element is null or cannot be found.');
+            }
+            if (this.onTick !== undefined) {
+                Props.all.addTickInstance(this);
+            }
+        }
+        return Module;
+    }());
+
+    var Modal = /** @class */ (function (_super) {
+        __extends(Modal, _super);
+        function Modal(el, options) {
+            if (options === void 0) { options = {
+                closeable: true,
+            }; }
+            var _this = _super.call(this, el) || this;
+            _this.opened = false;
+            _this.options = options;
+            _this.backdrop = document.createElement('div');
+            _this.backdrop.className = 'modal-backdrop';
+            return _this;
         }
         Modal.prototype.open = function () {
-            this.isOpened = true;
+            this.opened = true;
             this.el.style.display = 'block';
             this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling);
             this.bindEvents();
         };
         Modal.prototype.close = function () {
-            this.isOpened = false;
+            this.opened = false;
             this.el.style.display = 'none';
             this.el.parentElement.removeChild(this.backdrop);
+        };
+        Modal.prototype.isOpened = function () {
+            return this.opened;
         };
         Object.defineProperty(Modal.prototype, "closeable", {
             get: function () {
@@ -61,22 +108,7 @@
             } : null);
         };
         return Modal;
-    }());
-
-    var Module = /** @class */ (function () {
-        function Module(el) {
-            if (el instanceof HTMLElement) {
-                this.el = el;
-            }
-            else {
-                this.el = document.querySelector(el);
-            }
-            if (this.el === null) {
-                throw new Error('Provided Element is null or cannot be found.');
-            }
-        }
-        return Module;
-    }());
+    }(Module));
 
     var Events = /** @class */ (function () {
         function Events(scrollbar) {
@@ -91,7 +123,7 @@
             this.scrollbar.bar.onmousedown = function (event) { return _this.mouseDown(event); };
             this.scrollbar.el.onscroll = function (event) { return _this.userScrolled(event); };
             document.onmouseup = function (event) { return _this.mouseUp(event); };
-            this.watcher = setTimeout(function () { return _this.tick.call(_this); }, this.fps);
+            // this.watcher = setTimeout(() => this.tick.call(this), this.fps);
         }
         Events.prototype.tick = function () {
             var _this = this;
@@ -117,7 +149,6 @@
             this.scrollbar.move(scrollDistance);
         };
         Events.prototype.mouseWheel = function (event) {
-            event.preventDefault();
             var distance = null;
             if (event.wheelDelta && (event.wheelDelta % 120) === 0) {
                 distance = -(event.wheelDelta / 10);
@@ -125,7 +156,10 @@
             else {
                 distance = event.deltaY;
             }
-            this.scrollbar.move(distance);
+            if ((distance > 0 && this.scrollbar.el.scrollTop < (this.scrollbar.scrollHeight - this.scrollbar.height)) || (distance < 0 && this.scrollbar.el.scrollTop > 0)) {
+                event.preventDefault();
+                this.scrollbar.move(distance);
+            }
         };
         Events.prototype.mouseUp = function (event) {
             document.onmousemove = null;
@@ -193,6 +227,14 @@
             }
             this.bar.style.marginTop = this.position + 'px';
         };
+        Scrollbar.prototype.onTick = function () {
+            if (this.el.scrollHeight !== this.scrollHeight) {
+                this.calculateSizes.call(this);
+            }
+            if (this.height !== this.el.clientHeight || this.width !== this.el.clientWidth) {
+                this.calculateSizes.call(this);
+            }
+        };
         Scrollbar.prototype.createScroll = function () {
             this.scroll = document.createElement('div');
             this.scroll.classList.add('scroll-bar');
@@ -205,10 +247,36 @@
         return Scrollbar;
     }(Module));
 
+    var Position;
+    (function (Position) {
+        Position[Position["TOP"] = 0] = "TOP";
+        Position[Position["BOTTOM"] = 1] = "BOTTOM";
+        Position[Position["LEFT"] = 2] = "LEFT";
+        Position[Position["RIGHT"] = 3] = "RIGHT";
+        Position[Position["CLASS"] = 4] = "CLASS";
+    })(Position || (Position = {}));
     var Tooltip = /** @class */ (function (_super) {
         __extends(Tooltip, _super);
-        function Tooltip(el) {
+        function Tooltip(el, position) {
+            if (position === void 0) { position = Position.CLASS; }
             var _this = _super.call(this, el) || this;
+            if (position === Position.CLASS) {
+                if (_this.el.className.indexOf('tooltip-top') > -1) {
+                    _this.position = Position.TOP;
+                }
+                else if (_this.el.className.indexOf('tooltip-left') > -1) {
+                    _this.position = Position.LEFT;
+                }
+                else if (_this.el.className.indexOf('tooltip-right') > -1) {
+                    _this.position = Position.RIGHT;
+                }
+                else {
+                    _this.position = Position.BOTTOM;
+                }
+            }
+            else {
+                _this.position = position;
+            }
             _this.el.onmouseenter = function (event) { return _this.mouseEnter(event); };
             _this.el.onmouseleave = function (event) { return _this.mouseLeave(event); };
             return _this;
@@ -219,20 +287,37 @@
             this.tooltip.className = 'tooltip';
             this.tooltip.innerHTML = text;
             this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling);
-            var _a = this.getPosition(), left = _a.left, top = _a.top;
+            var _a = this.calculatePosition(), left = _a.left, top = _a.top;
             this.tooltip.style.left = left + 'px';
             this.tooltip.style.top = top + 'px';
         };
         Tooltip.prototype.mouseLeave = function (event) {
             this.el.parentElement.removeChild(this.tooltip);
         };
-        Tooltip.prototype.getPosition = function () {
-            var left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
-            var top = this.el.offsetTop + this.el.clientHeight + 5;
+        Tooltip.prototype.calculatePosition = function () {
+            var left;
+            var top;
+            if (this.position === Position.BOTTOM) {
+                left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
+                top = this.el.offsetTop + this.el.clientHeight + 5;
+            }
+            else if (this.position === Position.TOP) {
+                left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
+                top = this.el.offsetTop - this.tooltip.clientHeight - 5;
+            }
+            else if (this.position === Position.LEFT) {
+                left = this.el.offsetLeft - this.tooltip.clientWidth - 5;
+                top = this.el.offsetTop + (this.el.clientHeight / 2) - (this.tooltip.clientHeight / 2);
+            }
+            else if (this.position === Position.RIGHT) {
+                left = this.el.offsetLeft + this.el.clientWidth + 5;
+                top = this.el.offsetTop + (this.el.clientHeight / 2) - (this.tooltip.clientHeight / 2);
+            }
             return {
                 left: left, top: top,
             };
         };
+        Tooltip.Position = Position;
         return Tooltip;
     }(Module));
 

@@ -1,23 +1,45 @@
+/// <reference types="node" />
+declare module "polyfills/props" {
+    import Module from "module";
+    export default class Props {
+        tickTimout: NodeJS.Timer;
+        tickInstances: Module[];
+        private fps;
+        constructor();
+        addTickInstance(c: Module): void;
+        tick(): void;
+        static readonly all: Props;
+    }
+    global  {
+        interface Window {
+            _fluide: Props;
+        }
+    }
+}
+declare module "module" {
+    export default interface Module {
+        onTick(): any;
+    }
+    export default abstract class Module {
+        el: HTMLElement;
+        constructor(el: HTMLElement | string);
+    }
+}
 declare module "modal/main" {
-    export default class Modal {
-        private el;
+    import Module from "module";
+    export default class Modal extends Module {
         private options;
-        private isOpened;
+        private opened;
         private backdrop;
         constructor(el: HTMLElement | string, options?: Options);
         open(): void;
         close(): void;
+        isOpened(): boolean;
         closeable: boolean;
         private bindEvents();
     }
     export interface Options {
         closeable: boolean;
-    }
-}
-declare module "module" {
-    export default abstract class Module {
-        el: HTMLElement;
-        constructor(el: HTMLElement | string);
     }
 }
 declare module "helpers" {
@@ -59,17 +81,27 @@ declare module "scrollbar/main" {
         calculateSizes(): void;
         move(distance: number): void;
         setBarPosition(): void;
+        onTick(): void;
         private createScroll();
     }
 }
 declare module "tooltip/main" {
     import Module from "module";
+    export enum Position {
+        TOP = 0,
+        BOTTOM = 1,
+        LEFT = 2,
+        RIGHT = 3,
+        CLASS = 4,
+    }
     export default class Tooltip extends Module {
+        static Position: typeof Position;
         private tooltip;
-        constructor(el: HTMLElement | string);
+        private position;
+        constructor(el: HTMLElement | string, position?: Position);
         private mouseEnter(this, event);
         private mouseLeave(this, event);
-        private getPosition();
+        private calculatePosition();
     }
 }
 declare module "fluide" {
@@ -85,23 +117,4 @@ declare module "fluide" {
         version: string;
     };
     export default _default;
-}
-declare module "polyfills/props" {
-    export default class Props {
-        requestAnimFrameLastCallValue: number;
-        requestAnimFrameIdValue: number;
-        static readonly all: Props;
-        static requestAnimFrameLastCall: number;
-        static readonly requestAnimFrameId: number;
-    }
-    global  {
-        interface Window {
-            _fluide: Props;
-        }
-    }
-}
-declare module "polyfills/animationFrame" {
-    const requestAnimationFrame: (callback: FrameRequestCallback) => number;
-    const cancelAnimationFrame: (id: number) => void;
-    export { cancelAnimationFrame, requestAnimationFrame };
 }
