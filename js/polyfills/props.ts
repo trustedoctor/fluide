@@ -1,5 +1,23 @@
+import Module from '../module'
+
 export default class Props {
-  public requestAnimFrameLastCallValue: number = 0
+  public tickTimout: NodeJS.Timer = null
+  public tickInstances: Module[] = []
+
+  private fps: number = 1000 / 24
+
+  constructor() {
+    this.tickTimout = setTimeout(() => this.tick(), this.fps)
+  }
+
+  public addTickInstance(c: Module) {
+    this.tickInstances.push(c)
+  }
+
+  public tick() {
+    this.tickInstances.forEach(instance => instance.onTick())
+    this.tickTimout = setTimeout(() => this.tick(), this.fps)
+  }
 
   static get all(): Props {
     if (typeof window._fluide === typeof undefined) {
@@ -7,14 +25,6 @@ export default class Props {
     }
 
     return window._fluide
-  }
-
-  static get requestAnimFrameLastCall(): number {
-    return Props.all.requestAnimFrameLastCallValue
-  }
-
-  static set requestAnimFrameLastCall(value: number) {
-    Props.all.requestAnimFrameLastCallValue = value
   }
 }
 
