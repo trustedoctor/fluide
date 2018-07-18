@@ -1,6 +1,6 @@
 import Module from '../module';
 
-enum Position {
+export enum Position {
   TOP, BOTTOM, LEFT, RIGHT, CLASS,
 }
 
