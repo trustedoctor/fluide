@@ -1,17 +1,15 @@
-export default class Modal {
-  private el: HTMLElement
+import Module from '../module';
+
+export default class Modal extends Module {
   private options: Options
-  private isOpened: boolean = false
+  private opened: boolean = false
   private backdrop: HTMLElement
 
   constructor(el: HTMLElement | string, options: Options = {
     closeable: true,
   }) {
-    if (el instanceof HTMLElement) {
-      this.el = el
-    } else {
-      this.el = document.querySelector(el)
-    }
+    super(el)
+
     this.options = options
 
     this.backdrop = document.createElement('div')
@@ -19,7 +17,7 @@ export default class Modal {
   }
 
   public open() {
-    this.isOpened = true
+    this.opened = true
     this.el.style.display = 'block'
 
     this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling)
@@ -28,10 +26,14 @@ export default class Modal {
   }
 
   public close() {
-    this.isOpened = false
+    this.opened = false
     this.el.style.display = 'none'
 
     this.el.parentElement.removeChild(this.backdrop)
+  }
+
+  public isOpened() {
+    return this.opened
   }
 
   get closeable(): boolean {
