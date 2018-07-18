@@ -54,8 +54,6 @@ export default class Events {
   }
 
   private mouseWheel(this: Events, event: WheelEvent) {
-    event.preventDefault()
-
     let distance = null
 
     if (event.wheelDelta && (event.wheelDelta % 120) === 0) {
@@ -64,7 +62,10 @@ export default class Events {
       distance = event.deltaY
     }
 
-    this.scrollbar.move(distance)
+    if ((distance > 0 && this.scrollbar.el.scrollTop < (this.scrollbar.scrollHeight - this.scrollbar.height)) || (distance < 0 && this.scrollbar.el.scrollTop > 0)) {
+      event.preventDefault()
+      this.scrollbar.move(distance)
+    }
   }
 
   private mouseUp(this: Events, event: MouseEvent) {
