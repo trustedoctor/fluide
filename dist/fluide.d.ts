@@ -35,7 +35,8 @@ declare module "modal/main" {
         open(): void;
         close(): void;
         isOpened(): boolean;
-        closeable: boolean;
+        setCloseable(state: boolean): void;
+        isCloseable(): boolean;
         private bindEvents();
     }
     export interface Options {

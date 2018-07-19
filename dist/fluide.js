@@ -89,19 +89,15 @@
         Modal.prototype.isOpened = function () {
             return this.opened;
         };
-        Object.defineProperty(Modal.prototype, "closeable", {
-            get: function () {
-                return this.options.closeable;
-            },
-            set: function (state) {
-                this.options.closeable = state;
-                if (this.opened) {
-                    this.bindEvents();
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
+        Modal.prototype.setCloseable = function (state) {
+            this.options.closeable = state;
+            if (this.opened) {
+                this.bindEvents();
+            }
+        };
+        Modal.prototype.isCloseable = function () {
+            return this.options.closeable;
+        };
         Modal.prototype.bindEvents = function () {
             var _this = this;
             this.backdrop.onclick = (this.options.closeable ? function (event) {
