@@ -42,6 +42,9 @@ export default class Modal extends Module {
 
   set closeable(state: boolean) {
     this.options.closeable = state
+    if (this.opened) {
+      this.bindEvents()
+    }
   }
 
   private bindEvents() {
