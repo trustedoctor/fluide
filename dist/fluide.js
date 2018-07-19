@@ -95,6 +95,9 @@
             },
             set: function (state) {
                 this.options.closeable = state;
+                if (this.opened) {
+                    this.bindEvents();
+                }
             },
             enumerable: true,
             configurable: true
