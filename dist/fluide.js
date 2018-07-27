@@ -73,18 +73,22 @@
             _this.options = options;
             _this.backdrop = document.createElement('div');
             _this.backdrop.className = 'modal-backdrop';
+            _this.el.style.display = 'block';
+            _this.el.remove();
+            _this.backdrop.appendChild(_this.el);
             return _this;
         }
         Modal.prototype.open = function () {
             this.opened = true;
-            this.el.style.display = 'block';
-            this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling);
+            // this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling)
+            document.body.appendChild(this.backdrop);
             this.bindEvents();
         };
         Modal.prototype.close = function () {
             this.opened = false;
-            this.el.style.display = 'none';
-            this.el.parentElement.removeChild(this.backdrop);
+            // this.el.style.display = 'none'
+            // this.el.parentElement.removeChild(this.backdrop)
+            document.body.removeChild(this.backdrop);
         };
         Modal.prototype.isOpened = function () {
             return this.opened;
@@ -176,7 +180,9 @@
             _this.maxPosition = 0;
             _this.position = 0;
             _this.scrollClass = null;
-            _this.el.classList.add('scroll-content');
+            if (_this.el.className.indexOf('scroll-content') === -1) {
+                _this.el.className = _this.el.className + ' scroll-content';
+            }
             _this.createScroll();
             _this.calculateSizes();
             return _this;
@@ -236,9 +242,9 @@
         };
         Scrollbar.prototype.createScroll = function () {
             this.scroll = document.createElement('div');
-            this.scroll.classList.add('scroll-bar');
+            this.scroll.className = 'scroll-bar';
             this.bar = document.createElement('div');
-            this.bar.classList.add('bar');
+            this.bar.className = 'bar';
             this.scroll.appendChild(this.bar);
             this.events = new Events(this);
             this.el.parentElement.insertBefore(this.scroll, this.el.nextSibling);
