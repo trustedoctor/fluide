@@ -180,9 +180,6 @@
             _this.maxPosition = 0;
             _this.position = 0;
             _this.scrollClass = null;
-            if (_this.el.className.indexOf('scroll-content') === -1) {
-                _this.el.className = _this.el.className + ' scroll-content';
-            }
             _this.createScroll();
             _this.calculateSizes();
             return _this;
@@ -242,7 +239,7 @@
         };
         Scrollbar.prototype.createScroll = function () {
             this.scroll = document.createElement('div');
-            this.scroll.className = 'scroll-bar';
+            this.scroll.className = 'scrollbar-handler';
             this.bar = document.createElement('div');
             this.bar.className = 'bar';
             this.scroll.appendChild(this.bar);
