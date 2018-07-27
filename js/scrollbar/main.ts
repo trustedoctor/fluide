@@ -24,10 +24,6 @@ export default class Scrollbar extends Module {
   constructor(el: HTMLElement) {
     super(el)
 
-    if (this.el.className.indexOf('scroll-content') === -1) {
-      this.el.className = this.el.className + ' scroll-content'
-    }
-
     this.createScroll()
     this.calculateSizes()
   }
@@ -87,7 +83,7 @@ export default class Scrollbar extends Module {
 
   private createScroll() {
     this.scroll = document.createElement('div')
-    this.scroll.className = 'scroll-bar'
+    this.scroll.className = 'scrollbar-handler'
 
     this.bar = document.createElement('div')
     this.bar.className = 'bar'
