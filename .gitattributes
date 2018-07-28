@@ -1,0 +1,3 @@
+test/* linguist-vendored
+build/* linguist-vendored
+example/* linguist-documentation
