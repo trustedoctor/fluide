@@ -71,11 +71,17 @@
         <div class="box">
           <button onclick="modal.open()" alt="New button tooltip">Open dialog</button>
           <div class="modal test-modal">
-            test
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              test
+            </div>
           </div>
           <button onclick="modalNotCloseable.open()">Open not closeable dialog</button>
           <div class="modal test-modal-not-closeable">
-            test
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              test
+            </div>
           </div>
         </div>
       </div>

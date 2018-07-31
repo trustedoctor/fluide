@@ -3,36 +3,27 @@ import Module from '../module';
 export default class Modal extends Module {
   private options: Options
   private opened: boolean = false
-  private backdrop: HTMLElement
+  private content: HTMLElement
 
   constructor(el: HTMLElement | string, options: Options = {
     closeable: true,
   }) {
     super(el)
 
+    this.content = this.el.querySelector('.modal-content')
     this.options = options
-
-    this.backdrop = document.createElement('div')
-    this.backdrop.className = 'modal-backdrop'
-
-    this.el.style.display = 'block'
-
-    this.el.remove()
-    this.backdrop.appendChild(this.el)
-  }
-
-  public open() {
-    this.opened = true
-
-    document.body.appendChild(this.backdrop)
 
     this.bindEvents()
   }
 
-  public close() {
-    this.opened = false
+  public open() {
+    this.el.classList.add('visible')
+    this.opened = true
+  }
 
-    document.body.removeChild(this.backdrop)
+  public close() {
+    this.el.classList.remove('visible')
+    this.opened = false
   }
 
   public isOpened() {
@@ -41,9 +32,7 @@ export default class Modal extends Module {
 
   public setCloseable(state: boolean) {
     this.options.closeable = state
-    if (this.opened) {
-      this.bindEvents()
-    }
+    this.bindEvents()
   }
 
   public isCloseable(): boolean {
@@ -51,8 +40,8 @@ export default class Modal extends Module {
   }
 
   private bindEvents() {
-    this.backdrop.onclick = (this.options.closeable ? (event: MouseEvent) => {
-      if (this.backdrop === event.target) {
+    this.el.onclick = (this.options.closeable ? (event: MouseEvent) => {
+      if (event.target !== this.content) {
         this.close()
       }
     } : null)

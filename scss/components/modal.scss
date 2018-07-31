@@ -4,28 +4,39 @@
   .modal {
     display: none;
     position: fixed;
-    width: 800px;
-    max-height: calc(100% - 40px);
+    align-items: center;
+    justify-content: center;
     overflow: auto;
-    background: #fff;
-    color: initial;
-    text-align: left;
-    z-index: map-get($z-indexes, modal) + 1;
-  }
-
-  .modal-backdrop {
-    position: fixed;
-    width: 100%;
-    height: 100%;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
     z-index: map-get($z-indexes, modal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+
+    &.visible {
+      display: flex;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: map-get($z-indexes, modal) + 1;
+    }
+
+    .modal-content {
+      overflow: hidden;
+      width: 800px;
+      max-height: calc(100% - 40px);
+      background: #fff;
+      color: initial;
+      text-align: left;
+      z-index: map-get($z-indexes, modal) + 2;
+    }
   }
 }
