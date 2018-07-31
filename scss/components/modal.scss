@@ -2,23 +2,18 @@
 
 @mixin modal {
   .modal {
-    position: fixed;
     display: none;
+    position: fixed;
     width: 800px;
-    height: -moz-fit-content;
-    height: -webkit-fit-content;
-    height: fit-content;
-    left: 0;
-    right: 0;
-    top: 0;
-    margin: 1.75rem auto;
+    max-height: calc(100% - 40px);
+    overflow: auto;
     background: #fff;
     color: initial;
     text-align: left;
     z-index: map-get($z-indexes, modal) + 1;
   }
 
-  .modal + .modal-backdrop {
+  .modal-backdrop {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -28,5 +23,9 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: map-get($z-indexes, modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
   }
 }

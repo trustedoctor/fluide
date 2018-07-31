@@ -14,22 +14,25 @@ export default class Modal extends Module {
 
     this.backdrop = document.createElement('div')
     this.backdrop.className = 'modal-backdrop'
+
+    this.el.style.display = 'block'
+
+    this.el.remove()
+    this.backdrop.appendChild(this.el)
   }
 
   public open() {
     this.opened = true
-    this.el.style.display = 'block'
 
-    this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling)
+    document.body.appendChild(this.backdrop)
 
     this.bindEvents()
   }
 
   public close() {
     this.opened = false
-    this.el.style.display = 'none'
 
-    this.el.parentElement.removeChild(this.backdrop)
+    document.body.removeChild(this.backdrop)
   }
 
   public isOpened() {
