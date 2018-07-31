@@ -1,7 +1,7 @@
 /// <reference types="node" />
 declare module "polyfills/props" {
     import Module from "module";
-    export default class Props {
+    export class Props {
         tickTimout: NodeJS.Timer;
         tickInstances: Module[];
         private fps;
@@ -10,24 +10,24 @@ declare module "polyfills/props" {
         tick(): void;
         static readonly all: Props;
     }
-    global  {
+    global {
         interface Window {
             _fluide: Props;
         }
     }
 }
 declare module "module" {
-    export default interface Module {
+    export interface Module {
         onTick(): any;
     }
-    export default abstract class Module {
+    export abstract class Module {
         el: HTMLElement;
         constructor(el: HTMLElement | string);
     }
 }
 declare module "modal/main" {
     import Module from "module";
-    export default class Modal extends Module {
+    export class Modal extends Module {
         private options;
         private opened;
         private backdrop;
@@ -37,7 +37,7 @@ declare module "modal/main" {
         isOpened(): boolean;
         setCloseable(state: boolean): void;
         isCloseable(): boolean;
-        private bindEvents();
+        private bindEvents;
     }
     export interface Options {
         closeable: boolean;
@@ -48,7 +48,7 @@ declare module "helpers" {
 }
 declare module "scrollbar/events" {
     import Scrollbar from "scrollbar/main";
-    export default class Events {
+    export class Events {
         private scrollbar;
         private currentY;
         private isMac;
@@ -56,17 +56,17 @@ declare module "scrollbar/events" {
         private watcher;
         private fps;
         constructor(scrollbar: Scrollbar);
-        private tick();
-        private mouseDown(this, event);
-        private mouseMove(this, event);
-        private mouseWheel(this, event);
-        private mouseUp(this, event);
-        private userScrolled(this, event);
+        private tick;
+        private mouseDown;
+        private mouseMove;
+        private mouseWheel;
+        private mouseUp;
+        private userScrolled;
     }
 }
 declare module "scrollbar/main" {
     import Module from "module";
-    export default class Scrollbar extends Module {
+    export class Scrollbar extends Module {
         scroll: HTMLElement;
         bar: HTMLElement;
         scrollHeight: number;
@@ -83,7 +83,7 @@ declare module "scrollbar/main" {
         move(distance: number): void;
         setBarPosition(): void;
         onTick(): void;
-        private createScroll();
+        private createScroll;
     }
 }
 declare module "tooltip/main" {
@@ -93,16 +93,16 @@ declare module "tooltip/main" {
         BOTTOM = 1,
         LEFT = 2,
         RIGHT = 3,
-        CLASS = 4,
+        CLASS = 4
     }
-    export default class Tooltip extends Module {
+    export class Tooltip extends Module {
         static Position: typeof Position;
         private tooltip;
         private position;
         constructor(el: HTMLElement | string, position?: Position);
-        private mouseEnter(this, event);
-        private mouseLeave(this, event);
-        private calculatePosition();
+        private mouseEnter;
+        private mouseLeave;
+        private calculatePosition;
     }
 }
 declare module "fluide" {

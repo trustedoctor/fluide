@@ -80,14 +80,11 @@
         }
         Modal.prototype.open = function () {
             this.opened = true;
-            // this.el.parentElement.insertBefore(this.backdrop, this.el.nextSibling)
             document.body.appendChild(this.backdrop);
             this.bindEvents();
         };
         Modal.prototype.close = function () {
             this.opened = false;
-            // this.el.style.display = 'none'
-            // this.el.parentElement.removeChild(this.backdrop)
             document.body.removeChild(this.backdrop);
         };
         Modal.prototype.isOpened = function () {
