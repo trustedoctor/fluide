@@ -70,39 +70,33 @@
             }; }
             var _this = _super.call(this, el) || this;
             _this.opened = false;
+            _this.content = _this.el.querySelector('.modal-content');
             _this.options = options;
-            _this.backdrop = document.createElement('div');
-            _this.backdrop.className = 'modal-backdrop';
-            _this.el.style.display = 'block';
-            _this.el.remove();
-            _this.backdrop.appendChild(_this.el);
+            _this.bindEvents();
             return _this;
         }
         Modal.prototype.open = function () {
+            this.el.classList.add('visible');
             this.opened = true;
-            document.body.appendChild(this.backdrop);
-            this.bindEvents();
         };
         Modal.prototype.close = function () {
+            this.el.classList.remove('visible');
             this.opened = false;
-            document.body.removeChild(this.backdrop);
         };
         Modal.prototype.isOpened = function () {
             return this.opened;
         };
         Modal.prototype.setCloseable = function (state) {
             this.options.closeable = state;
-            if (this.opened) {
-                this.bindEvents();
-            }
+            this.bindEvents();
         };
         Modal.prototype.isCloseable = function () {
             return this.options.closeable;
         };
         Modal.prototype.bindEvents = function () {
             var _this = this;
-            this.backdrop.onclick = (this.options.closeable ? function (event) {
-                if (_this.backdrop === event.target) {
+            this.el.onclick = (this.options.closeable ? function (event) {
+                if (event.target !== _this.content) {
                     _this.close();
                 }
             } : null);

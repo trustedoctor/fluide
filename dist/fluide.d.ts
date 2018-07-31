@@ -30,7 +30,7 @@ declare module "modal/main" {
     export class Modal extends Module {
         private options;
         private opened;
-        private backdrop;
+        private content;
         constructor(el: HTMLElement | string, options?: Options);
         open(): void;
         close(): void;
