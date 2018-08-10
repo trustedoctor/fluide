@@ -279,8 +279,10 @@
             this.tooltip = document.createElement('div');
             this.tooltip.className = 'tooltip';
             this.tooltip.innerHTML = text;
+            this.tooltip.style.whiteSpace = 'nowrap';
             this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling);
             var _a = this.calculatePosition(), left = _a.left, top = _a.top;
+            this.tooltip.style.whiteSpace = 'normal';
             this.tooltip.style.left = left + 'px';
             this.tooltip.style.top = top + 'px';
         };
@@ -291,20 +293,26 @@
             var left;
             var top;
             if (this.position === Position.BOTTOM) {
-                left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
-                top = this.el.offsetTop + this.el.clientHeight + 5;
+                left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = this.el.offsetTop + this.el.offsetHeight + 5;
             }
             else if (this.position === Position.TOP) {
-                left = this.el.offsetLeft + (this.el.clientWidth / 2) - (this.tooltip.clientWidth / 2);
-                top = this.el.offsetTop - this.tooltip.clientHeight - 5;
+                left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = this.el.offsetTop - this.tooltip.offsetHeight - 5;
             }
             else if (this.position === Position.LEFT) {
-                left = this.el.offsetLeft - this.tooltip.clientWidth - 5;
-                top = this.el.offsetTop + (this.el.clientHeight / 2) - (this.tooltip.clientHeight / 2);
+                left = this.el.offsetLeft - this.tooltip.offsetWidth - 5;
+                top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             else if (this.position === Position.RIGHT) {
-                left = this.el.offsetLeft + this.el.clientWidth + 5;
-                top = this.el.offsetTop + (this.el.clientHeight / 2) - (this.tooltip.clientHeight / 2);
+                left = this.el.offsetLeft + this.el.offsetWidth + 5;
+                top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
+            }
+            if (left < 0) {
+                left = 0;
+            }
+            else if (left + this.tooltip.offsetWidth > document.documentElement.scrollWidth) {
+                left = document.documentElement.scrollWidth - this.tooltip.offsetWidth;
             }
             return {
                 left: left, top: top,
