@@ -279,10 +279,8 @@
             this.tooltip = document.createElement('div');
             this.tooltip.className = 'tooltip';
             this.tooltip.innerHTML = text;
-            this.tooltip.style.whiteSpace = 'nowrap';
             this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling);
             var _a = this.calculatePosition(), left = _a.left, top = _a.top;
-            this.tooltip.style.whiteSpace = 'normal';
             this.tooltip.style.left = left + 'px';
             this.tooltip.style.top = top + 'px';
         };
