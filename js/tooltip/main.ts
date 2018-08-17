@@ -37,13 +37,11 @@ export default class Tooltip extends Module {
     this.tooltip = document.createElement('div')
     this.tooltip.className = 'tooltip'
     this.tooltip.innerHTML = text
-    this.tooltip.style.whiteSpace = 'nowrap'
 
     this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling)
 
     const { left, top } = this.calculatePosition()
 
-    this.tooltip.style.whiteSpace = 'normal'
     this.tooltip.style.left = left + 'px'
     this.tooltip.style.top = top + 'px'
   }
