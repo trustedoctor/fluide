@@ -300,18 +300,18 @@
             var position = this.el.getBoundingClientRect();
             if (this.position === Position.BOTTOM) {
                 left = position.left + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = position.top + this.el.offsetHeight + 5;
+                top = position.top + this.el.offsetHeight + 10;
             }
             else if (this.position === Position.TOP) {
                 left = position.left + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = position.top - this.tooltip.offsetHeight - 5;
+                top = position.top - this.tooltip.offsetHeight - 10;
             }
             else if (this.position === Position.LEFT) {
-                left = position.left - this.tooltip.offsetWidth - 5;
+                left = position.left - this.tooltip.offsetWidth - 10;
                 top = position.top + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             else if (this.position === Position.RIGHT) {
-                left = position.left + this.el.offsetWidth + 5;
+                left = position.left + this.el.offsetWidth + 10;
                 top = position.top + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             if (left < 0) {
