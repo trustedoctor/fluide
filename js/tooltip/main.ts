@@ -1,7 +1,11 @@
 import Module from '../module';
 
 export enum Position {
-  TOP, BOTTOM, LEFT, RIGHT, CLASS,
+  TOP = 'tooltip-top',
+  BOTTOM = 'tooltip-top',
+  LEFT = 'tooltip-top',
+  RIGHT = 'tooltip-top',
+  CLASS = 'tooltip-top',
 }
 
 export default class Tooltip extends Module {
@@ -35,37 +39,50 @@ export default class Tooltip extends Module {
     const text = this.el.getAttribute('alt')
 
     this.tooltip = document.createElement('div')
-    this.tooltip.className = 'tooltip'
+    this.tooltip.classList.add('tooltip', this.position)
     this.tooltip.innerHTML = text
 
-    this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling)
+    document.body.appendChild(this.tooltip)
 
+    const { left, top } = this.calculatePosition()
+
+    this.tooltip.style.left = left + 'px'
+    this.tooltip.style.top = top + 'px'
+
+    window.onscroll = this.mouseScroll.bind(this)
+  }
+
+  private mouseLeave(this: Tooltip, event: UIEvent) {
+    document.body.removeChild(this.tooltip)
+
+    window.onscroll = null
+  }
+
+  private mouseScroll(this: Tooltip, event: UIEvent) {
     const { left, top } = this.calculatePosition()
 
     this.tooltip.style.left = left + 'px'
     this.tooltip.style.top = top + 'px'
   }
 
-  private mouseLeave(this: Tooltip, event: UIEvent) {
-    this.el.parentElement.removeChild(this.tooltip)
-  }
-
   private calculatePosition() {
     let left
     let top
 
+    const position = this.el.getBoundingClientRect()
+
     if (this.position === Position.BOTTOM) {
-      left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2)
-      top = this.el.offsetTop + this.el.offsetHeight + 5
+      left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2)
+      top = (position.top + window.pageYOffset) + this.el.offsetHeight + 5
     } else if (this.position === Position.TOP) {
-      left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2)
-      top = this.el.offsetTop - this.tooltip.offsetHeight - 5
+      left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2)
+      top = (position.top + window.pageYOffset) - this.tooltip.offsetHeight - 5
     } else if (this.position === Position.LEFT) {
-      left = this.el.offsetLeft - this.tooltip.offsetWidth - 5
-      top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2)
+      left = (position.left + window.pageXOffset) - this.tooltip.offsetWidth - 5
+      top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2)
     } else if (this.position === Position.RIGHT) {
-      left = this.el.offsetLeft + this.el.offsetWidth + 5
-      top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2)
+      left = (position.left + window.pageXOffset) + this.el.offsetWidth + 5
+      top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2)
     }
 
     if (left < 0) {

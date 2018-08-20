@@ -7,5 +7,6 @@
     border-radius: 2px;
     padding: 3px 8px;
     max-width: 12rem;
+    z-index: map-get($z-indexes, tooltip);
   }
 }
