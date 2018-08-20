@@ -1,6 +1,6 @@
 @mixin tooltip {
   .tooltip {
-    position: absolute;
+    position: fixed;
     background: #232F34;
     color: #fff;
     font-size: 12px;
