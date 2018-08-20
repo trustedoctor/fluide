@@ -242,11 +242,11 @@
 
     var Position;
     (function (Position) {
-        Position[Position["TOP"] = 0] = "TOP";
-        Position[Position["BOTTOM"] = 1] = "BOTTOM";
-        Position[Position["LEFT"] = 2] = "LEFT";
-        Position[Position["RIGHT"] = 3] = "RIGHT";
-        Position[Position["CLASS"] = 4] = "CLASS";
+        Position["TOP"] = "tooltip-top";
+        Position["BOTTOM"] = "tooltip-top";
+        Position["LEFT"] = "tooltip-top";
+        Position["RIGHT"] = "tooltip-top";
+        Position["CLASS"] = "tooltip-top";
     })(Position || (Position = {}));
     var Tooltip = /** @class */ (function (_super) {
         __extends(Tooltip, _super);
@@ -277,34 +277,42 @@
         Tooltip.prototype.mouseEnter = function (event) {
             var text = this.el.getAttribute('alt');
             this.tooltip = document.createElement('div');
-            this.tooltip.className = 'tooltip';
+            this.tooltip.classList.add('tooltip', this.position);
             this.tooltip.innerHTML = text;
-            this.el.parentElement.insertBefore(this.tooltip, this.el.nextSibling);
+            document.body.appendChild(this.tooltip);
+            var _a = this.calculatePosition(), left = _a.left, top = _a.top;
+            this.tooltip.style.left = left + 'px';
+            this.tooltip.style.top = top + 'px';
+            window.onscroll = this.mouseScroll.bind(this);
+        };
+        Tooltip.prototype.mouseLeave = function (event) {
+            document.body.removeChild(this.tooltip);
+            window.onscroll = null;
+        };
+        Tooltip.prototype.mouseScroll = function (event) {
             var _a = this.calculatePosition(), left = _a.left, top = _a.top;
             this.tooltip.style.left = left + 'px';
             this.tooltip.style.top = top + 'px';
         };
-        Tooltip.prototype.mouseLeave = function (event) {
-            this.el.parentElement.removeChild(this.tooltip);
-        };
         Tooltip.prototype.calculatePosition = function () {
             var left;
             var top;
+            var position = this.el.getBoundingClientRect();
             if (this.position === Position.BOTTOM) {
-                left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = this.el.offsetTop + this.el.offsetHeight + 5;
+                left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = (position.top + window.pageYOffset) + this.el.offsetHeight + 5;
             }
             else if (this.position === Position.TOP) {
-                left = this.el.offsetLeft + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = this.el.offsetTop - this.tooltip.offsetHeight - 5;
+                left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = (position.top + window.pageYOffset) - this.tooltip.offsetHeight - 5;
             }
             else if (this.position === Position.LEFT) {
-                left = this.el.offsetLeft - this.tooltip.offsetWidth - 5;
-                top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
+                left = (position.left + window.pageXOffset) - this.tooltip.offsetWidth - 5;
+                top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             else if (this.position === Position.RIGHT) {
-                left = this.el.offsetLeft + this.el.offsetWidth + 5;
-                top = this.el.offsetTop + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
+                left = (position.left + window.pageXOffset) + this.el.offsetWidth + 5;
+                top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             if (left < 0) {
                 left = 0;

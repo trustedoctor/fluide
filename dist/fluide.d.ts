@@ -89,11 +89,11 @@ declare module "scrollbar/main" {
 declare module "tooltip/main" {
     import Module from "module";
     export enum Position {
-        TOP = 0,
-        BOTTOM = 1,
-        LEFT = 2,
-        RIGHT = 3,
-        CLASS = 4
+        TOP = "tooltip-top",
+        BOTTOM = "tooltip-top",
+        LEFT = "tooltip-top",
+        RIGHT = "tooltip-top",
+        CLASS = "tooltip-top"
     }
     export class Tooltip extends Module {
         static Position: typeof Position;
@@ -102,6 +102,7 @@ declare module "tooltip/main" {
         constructor(el: HTMLElement | string, position?: Position);
         private mouseEnter;
         private mouseLeave;
+        private mouseScroll;
         private calculatePosition;
     }
 }
