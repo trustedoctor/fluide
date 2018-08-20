@@ -299,20 +299,20 @@
             var top;
             var position = this.el.getBoundingClientRect();
             if (this.position === Position.BOTTOM) {
-                left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = (position.top + window.pageYOffset) + this.el.offsetHeight + 5;
+                left = position.left + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = position.top + this.el.offsetHeight + 5;
             }
             else if (this.position === Position.TOP) {
-                left = (position.left + window.pageXOffset) + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
-                top = (position.top + window.pageYOffset) - this.tooltip.offsetHeight - 5;
+                left = position.left + (this.el.offsetWidth / 2) - (this.tooltip.offsetWidth / 2);
+                top = position.top - this.tooltip.offsetHeight - 5;
             }
             else if (this.position === Position.LEFT) {
-                left = (position.left + window.pageXOffset) - this.tooltip.offsetWidth - 5;
-                top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
+                left = position.left - this.tooltip.offsetWidth - 5;
+                top = position.top + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             else if (this.position === Position.RIGHT) {
-                left = (position.left + window.pageXOffset) + this.el.offsetWidth + 5;
-                top = (position.top + window.pageYOffset) + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
+                left = position.left + this.el.offsetWidth + 5;
+                top = position.top + (this.el.offsetHeight / 2) - (this.tooltip.offsetHeight / 2);
             }
             if (left < 0) {
                 left = 0;
