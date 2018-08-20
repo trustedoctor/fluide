@@ -243,10 +243,10 @@
     var Position;
     (function (Position) {
         Position["TOP"] = "tooltip-top";
-        Position["BOTTOM"] = "tooltip-top";
-        Position["LEFT"] = "tooltip-top";
-        Position["RIGHT"] = "tooltip-top";
-        Position["CLASS"] = "tooltip-top";
+        Position["BOTTOM"] = "tooltip-bottom";
+        Position["LEFT"] = "tooltip-left";
+        Position["RIGHT"] = "tooltip-right";
+        Position["CLASS"] = "";
     })(Position || (Position = {}));
     var Tooltip = /** @class */ (function (_super) {
         __extends(Tooltip, _super);

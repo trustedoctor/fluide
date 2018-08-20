@@ -90,10 +90,10 @@ declare module "tooltip/main" {
     import Module from "module";
     export enum Position {
         TOP = "tooltip-top",
-        BOTTOM = "tooltip-top",
-        LEFT = "tooltip-top",
-        RIGHT = "tooltip-top",
-        CLASS = "tooltip-top"
+        BOTTOM = "tooltip-bottom",
+        LEFT = "tooltip-left",
+        RIGHT = "tooltip-right",
+        CLASS = ""
     }
     export class Tooltip extends Module {
         static Position: typeof Position;
